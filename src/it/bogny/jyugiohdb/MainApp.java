@@ -2,10 +2,9 @@
 package it.bogny.jyugiohdb;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import it.bogny.jyugiohdb.database.DbCardDbTable;
 import it.bogny.jyugiohdb.model.Card;
 import it.bogny.jyugiohdb.view.CardOverviewController;
 import javafx.application.Application;
@@ -27,6 +26,11 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane mainLayout;
 
+    /**
+     * 
+     * 
+     * 
+     */
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -36,7 +40,7 @@ public class MainApp extends Application {
 
         showCardOverview();
 
-        createNewDatabase("yugiohdb.db");
+        // DbConnect.dbConnection();
 
     }
 
@@ -95,9 +99,20 @@ public class MainApp extends Application {
     private ObservableList<Card> cardData = FXCollections.observableArrayList();
 
     /**
-     * Constructor
+     * Main constructor
      */
     public MainApp() {
+        // TODO Create SELECT db function and add value to cardData
+        ResultSet rs = DbCardDbTable.selectCardDb();
+        try {
+            while (rs.next()) {
+                System.out.println(rs.getInt("cardId") + "\t" + rs.getString("cardNameIT") + "\t" + rs.getString("cardNameEN"));
+                cardData.add(new Card(rs.getInt("cardId")));
+            }
+        } catch (SQLException SQLEx) {
+            // TODO Auto-generated catch block
+            SQLEx.printStackTrace();
+        }
         // Add some sample data
         cardData.add(new Card(4007));
         cardData.add(new Card(10200));
@@ -115,28 +130,6 @@ public class MainApp extends Application {
      */
     public ObservableList<Card> getCardData() {
         return cardData;
-    }
-
-    /**
-     * Connect to a sample database
-     *
-     * @param fileName
-     *            the database file name
-     */
-    public static void createNewDatabase(String fileName) {
-
-        String url = "jdbc:sqlite:" + fileName;
-
-        // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS warehouses (id integer PRIMARY KEY, name text NOT NULL, capacity real);";
-
-        try (Connection conn = DriverManager.getConnection(url); Statement stmt = conn.createStatement()) {
-            // create a new table
-            stmt.execute(sql);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
     }
 
     public static void main(String[] args) {
