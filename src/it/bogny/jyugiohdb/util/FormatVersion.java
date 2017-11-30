@@ -7,7 +7,7 @@ package it.bogny.jyugiohdb.util;
 import com.sun.corba.se.impl.util.Version;
 
 /**
- * @author luca_
+ * @author BoGnY
  *
  */
 public class FormatVersion {
