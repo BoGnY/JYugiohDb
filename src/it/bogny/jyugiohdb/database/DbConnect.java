@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * @author luca_
+ * @author BoGnY
  *
  */
 public class DbConnect {
@@ -29,11 +29,9 @@ public class DbConnect {
         } catch (SQLException SQLEx) {
             // if the error message is "out of memory",
             // it probably means no database file is found
-            System.err.println(SQLEx.getMessage());
+            System.err.println(SQLEx.getClass().getName() + ": " + SQLEx.getMessage());
         } catch (Exception Ex) {
-            // if the error message is "out of memory",
-            // it probably means no database file is found
-            System.err.println(Ex.getMessage());
+            System.err.println(Ex.getClass().getName() + ": " + Ex.getMessage());
         }
         return dbConnection;
     }
