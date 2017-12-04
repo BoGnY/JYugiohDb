@@ -4,9 +4,9 @@
  * database
  *
  * @author BoGnY
- *
- * @version 1.0.0.14
+ * 
+ * @since 1.0
  * 
  */
 
-package it.bogny.jyugiohdb;
+package it.bogny.jyugiohdb.database;
