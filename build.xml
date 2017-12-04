@@ -36,12 +36,28 @@
 	</target>
 
     <target name="create_jar_included_libs" depends="clean, init, revision, final">
+		<copy todir="./${jar.dir}">
+		    <fileset dir="./${lib.dir}">
+  		    	<include name="*.jar" />
+				<exclude name="*sources.jar" />
+				<exclude name="*javadoc.jar" />
+		    </fileset>
+		</copy>
+    	<manifestclasspath property="rsrc.classpath" jarfile="./${jar.dir}/${ant.project.name}.jar">
+        	<classpath>
+            	<fileset dir="./${jar.dir}">
+        			<include name="*.jar" />
+        			<exclude name="${ant.project.name}.jar" />
+            	</fileset>
+        	</classpath>
+        </manifestclasspath>
+    	<echo message="Rsrc-Class-Path is: ./ ${rsrc.classpath}" />
         <jar destfile="./${jar.dir}/${ant.project.name}.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader" />
                 <attribute name="Rsrc-Main-Class" value="it.bogny.jyugiohdb.MainApp" />
                 <attribute name="Class-Path" value="." />
-                <attribute name="Rsrc-Class-Path" value="./ sqlite-jdbc-3.21.0.jar javafx8-ide-css-3.0.0.201705220750.jar javafx8.jar" />
+                <attribute name="Rsrc-Class-Path" value="./ ${rsrc.classpath}" />
 				<attribute name="Specification-Version" value="${specification.version}" />
 				<attribute name="Implementation-Version" value="${implementation.version}" />
 				<attribute name="Built-By" value="${builder.name}" />
@@ -56,23 +72,16 @@
 				<exclude name="*sources.jar" />
 				<exclude name="*javadoc.jar" />
 			</fileset>
-     </jar>
+    	</jar>
+        <delete>
+        	<fileset dir="./${jar.dir}">
+    			<include name="*.jar" />
+    			<exclude name="${ant.project.name}.jar" />
+        	</fileset>
+        </delete>
     </target>
 	
     <target name="create_jar_separated_libs" depends="clean, init, revision, final">
-        <jar destfile="./${jar.dir}/${ant.project.name}.jar">
-            <manifest>
-                <attribute name="Main-Class" value="it.bogny.jyugiohdb.MainApp" />
-                <attribute name="Class-Path" value=". ${lib.dir}/sqlite-jdbc-3.21.0.jar ${lib.dir}/javafx8-ide-css-3.0.0.201705220750.jar ${lib.dir}/javafx8.jar" />
-				<attribute name="Specification-Version" value="${specification.version}" />
-				<attribute name="Implementation-Version" value="${implementation.version}" />
-				<attribute name="Built-By" value="${builder.name}" />
-				<attribute name="Built-On" value="${timestamp.build}" />
-				<attribute name="Git-Branch" value="${git.branch}" />
-				<attribute name="Git-Revision" value="${git.revision}" />
-            </manifest>
-        	<fileset dir="./bin" />
-        </jar>
         <delete dir="./${jar.dir}/${lib.dir}" />
         <mkdir dir="./${jar.dir}/${lib.dir}" />
 		<copy todir="./${jar.dir}/${lib.dir}">
@@ -82,6 +91,27 @@
 				<exclude name="*javadoc.jar" />
 		    </fileset>
 		</copy>
+    	<manifestclasspath property="rsrc.classpath" jarfile="./${jar.dir}/${ant.project.name}.jar">
+        	<classpath>
+            	<fileset dir="./${jar.dir}/${lib.dir}">
+        			<include name="*.jar" />
+            	</fileset>
+        	</classpath>
+        </manifestclasspath>
+    	<echo message="Rsrc-Class-Path is: ./ ${rsrc.classpath}" />
+        <jar destfile="./${jar.dir}/${ant.project.name}.jar">
+            <manifest>
+                <attribute name="Main-Class" value="it.bogny.jyugiohdb.MainApp" />
+                <attribute name="Class-Path" value="./ ${rsrc.classpath}" />
+				<attribute name="Specification-Version" value="${specification.version}" />
+				<attribute name="Implementation-Version" value="${implementation.version}" />
+				<attribute name="Built-By" value="${builder.name}" />
+				<attribute name="Built-On" value="${timestamp.build}" />
+				<attribute name="Git-Branch" value="${git.branch}" />
+				<attribute name="Git-Revision" value="${git.revision}" />
+            </manifest>
+        	<fileset dir="./bin" />
+        </jar>
     </target>
 	
 	<target name="create_source_pack" depends="clean" description="Make a source distribution">
