@@ -7,9 +7,10 @@
 	</description>
 
 	<property file="build.properties" />
+	<property file="${config.dir}/app.properties" />
 
 	<tstamp>
-		<format property="timestamp.build" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+		<format property="timestamp.build" pattern="yyyy-MM-dd HH:mm:ss" />
 		<format property="timestamp.source" pattern="yyyyMMddHHmmss" />
 	</tstamp>
 
