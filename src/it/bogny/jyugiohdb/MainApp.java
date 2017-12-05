@@ -1,15 +1,19 @@
 
 package it.bogny.jyugiohdb;
 
-import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.config.Configurator;
 import it.bogny.jyugiohdb.database.DbCardDbTable;
 import it.bogny.jyugiohdb.model.Card;
+import it.bogny.jyugiohdb.util.Version;
 import it.bogny.jyugiohdb.view.CardOverviewController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -26,9 +30,13 @@ import javafx.stage.Stage;
  * @author BoGnY
  */
 public class MainApp extends Application {
-    static Logger logger = LogManager.getLogger(MainApp.class);
+    public static Logger logger = LogManager.getLogger(MainApp.class);
     private Stage primaryStage;
     private BorderPane mainLayout;
+    public static final String fileSeparator = System.getProperty("file.separator");
+    public static final String lineSeparator = System.getProperty("line.separator");
+    public static Properties configProp = new Properties();
+    public static InputStream inputProp = null;
 
     /**
      * The main entry point for all JavaFX applications. The start method is called
@@ -48,7 +56,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("YugiohDb");
+        this.primaryStage.setTitle("YugiohDb v" + Version.formatVersion());
 
         initMainLayout();
 
@@ -57,7 +65,7 @@ public class MainApp extends Application {
         ResultSet rs = DbCardDbTable.selectCardDb();
         try {
             while (rs.next()) {
-                System.out.println(rs.getInt("cardId") + System.getProperty("line.separator") + rs.getString("cardNameIT") + "\t" + rs.getString("cardNameEN"));
+                System.out.println(rs.getInt("cardId") + "\t" + rs.getString("cardNameIT") + "\t" + rs.getString("cardNameEN"));
                 cardData.add(new Card(rs.getInt("cardId")));
             }
         } catch (SQLException SQLEx) {
@@ -153,7 +161,18 @@ public class MainApp extends Application {
      */
     public static void main(String[] args) {
         // Set instantly the configuration of log4j2
-        Configurator.initialize(null, "config" + File.separator + "log4j2.xml");
+        Configurator.initialize(null, "config" + fileSeparator + "log4j2.xml");
+
+        // Set immediately the configuration properties of app
+        try {
+            inputProp = new FileInputStream("config" + fileSeparator + "app.properties");
+            configProp.load(inputProp);
+        } catch (FileNotFoundException FileNotFoundEx) {
+            logger.fatal(FileNotFoundEx);
+        } catch (IOException IOEx) {
+            logger.fatal(IOEx);
+        }
+
         launch(args);
     }
 }
