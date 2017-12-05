@@ -136,5 +136,8 @@
 
 	<target name="final">
     	<copy file="./yugiohdb_empty.db" tofile="./${jar.dir}/yugiohdb.db" />
+		<copy todir="./${jar.dir}/${config.dir}">
+		    <fileset dir="./${config.dir}" />
+		</copy>
 	</target>
 </project>

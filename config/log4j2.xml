@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="ALL" name="JYugiohDbLogConfig" packages="">
+	<Properties>
+		<Property name="LOG_DIR">log</Property>
+		<Property name="PATTERN">%date{HH:mm:ss,SSS} %-5level [%thread] %class:%method(line %line) => %message%n</Property>
+	</Properties>
+	<Appenders>
+		<Console name="STDOUT" target="SYSTEM_OUT">
+			<PatternLayout pattern="${PATTERN}" />
+		</Console>
+		<File name="File" fileName="${LOG_DIR}/log-${date:yyyyMMdd}.log" append="true">
+			<PatternLayout pattern="${PATTERN}" />
+		</File>
+	</Appenders>
+	<Loggers>
+		<Root level="DEBUG">
+			<AppenderRef ref="File" />
+		</Root>
+		<Logger name="it.bogny.jyugiohdb.logger" level="DEBUG">
+			<AppenderRef ref="STDOUT" />
+		</Logger>
+	</Loggers>
+</Configuration>

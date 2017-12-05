@@ -3,6 +3,7 @@
 .metadata
 bin/
 build/
+log/
 tmp/
 *.tmp
 *.bak
