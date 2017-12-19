@@ -1,5 +1,5 @@
 language: android
 jdk: oraclejdk8
-install: ant deps
+
 after_success:
   - bash <(curl -s https://codecov.io/bash)
