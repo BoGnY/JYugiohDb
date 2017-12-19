@@ -35,7 +35,7 @@
 	<target name="clean" description="clean up">
 		<delete failonerror="false" dir="./${build.dir}" />
 	</target>
-
+	
     <target name="create_jar_included_libs" depends="clean, init, revision, final">
 		<copy todir="./${jar.dir}">
 		    <fileset dir="./${lib.dir}">
@@ -117,7 +117,7 @@
 	
 	<target name="create_source_pack" depends="clean" description="Make a source distribution">
 		<mkdir dir="./${zip.dir}" />
-		<zip destfile="./${zip.dir}/${ant.project.name}-${timestamp.source}-src.zip">
+		<zip destfile="./${zip.dir}/${ant.project.name}-${specification.version}${prerelease.version}+build.${implementation.version}.${timestamp.source}-src.zip">
 			<fileset dir="${basedir}">
 				<include name="src/**/*" />
 				<include name="LICENSE" />
