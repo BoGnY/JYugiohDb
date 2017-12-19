@@ -9,12 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import it.bogny.jyugiohdb.util.Log;
 
 /**
  * @author BoGnY
  *
  */
 public class DbCardDbTable {
+
     /**
      * Select all rows in cardDb table
      * 
@@ -28,12 +30,10 @@ public class DbCardDbTable {
         ResultSet dbResultSet = null;
         try {
             dbConnection = DbConnect.dbConnection();
-            // set auto-commit mode to false
-            dbConnection.setAutoCommit(false);
             dbStatement = dbConnection.createStatement();
             dbResultSet = dbStatement.executeQuery(sqlString);
         } catch (SQLException SQLEx) {
-            System.err.println(SQLEx.getClass().getName() + ": " + SQLEx.getMessage());
+            Log.save("error", SQLEx);
         }
         return dbResultSet;
     }
@@ -53,13 +53,11 @@ public class DbCardDbTable {
         ResultSet dbResultSet = null;
         try {
             dbConnection = DbConnect.dbConnection();
-            // set auto-commit mode to false
-            dbConnection.setAutoCommit(false);
             dbPreparedStatement = dbConnection.prepareStatement(sqlString);
             dbPreparedStatement.setInt(1, cardId);
             dbResultSet = dbPreparedStatement.executeQuery(sqlString);
         } catch (SQLException SQLEx) {
-            System.err.println(SQLEx.getClass().getName() + ": " + SQLEx.getMessage());
+            Log.save("error", SQLEx);
         }
         return dbResultSet;
     }
@@ -89,8 +87,6 @@ public class DbCardDbTable {
         PreparedStatement dbPreparedStatement = null;
         try {
             dbConnection = DbConnect.dbConnection();
-            // set auto-commit mode to false
-            dbConnection.setAutoCommit(false);
             dbPreparedStatement = dbConnection.prepareStatement(sqlString);
             dbPreparedStatement.setInt(1, cardId);
             dbPreparedStatement.setString(2, cardNameIT);
@@ -104,10 +100,9 @@ public class DbCardDbTable {
             dbPreparedStatement.setString(10, cardAtk);
             dbPreparedStatement.setString(11, cardDef);
             dbPreparedStatement.setString(12, cardText);
-            // int rowAffected = dbPreparedStatement.executeUpdate();
             dbPreparedStatement.executeUpdate();
         } catch (SQLException SQLEx) {
-            System.err.println(SQLEx.getClass().getName() + ": " + SQLEx.getMessage());
+            Log.save("error", SQLEx);
         }
         // After the insert statement, return the updated cardDb table rows
         ResultSet dbResultSet = selectCardDb();
@@ -139,8 +134,6 @@ public class DbCardDbTable {
         PreparedStatement dbPreparedStatement = null;
         try {
             dbConnection = DbConnect.dbConnection();
-            // set auto-commit mode to false
-            dbConnection.setAutoCommit(false);
             dbPreparedStatement = dbConnection.prepareStatement(sqlString);
             dbPreparedStatement.setString(1, cardNameIT);
             dbPreparedStatement.setString(2, cardNameEN);
@@ -154,10 +147,9 @@ public class DbCardDbTable {
             dbPreparedStatement.setString(10, cardDef);
             dbPreparedStatement.setString(11, cardText);
             dbPreparedStatement.setInt(12, cardId);
-            // int rowAffected = dbPreparedStatement.executeUpdate();
             dbPreparedStatement.executeUpdate();
         } catch (SQLException SQLEx) {
-            System.err.println(SQLEx.getClass().getName() + ": " + SQLEx.getMessage());
+            Log.save("error", SQLEx);
         }
         // After the insert statement, return the updated cardDb table rows
         ResultSet dbResultSet = selectCardDb();
@@ -178,21 +170,11 @@ public class DbCardDbTable {
         PreparedStatement dbPreparedStatement = null;
         try {
             dbConnection = DbConnect.dbConnection();
-            // set auto-commit mode to false
-            // dbConnection.setAutoCommit(false);
             dbPreparedStatement = dbConnection.prepareStatement(sqlString);
             dbPreparedStatement.setInt(1, cardId);
-            // int rowAffected = dbPreparedStatement.executeUpdate();
             dbPreparedStatement.executeUpdate();
-            /*
-             * if (rowAffected != 1) {
-             * dbConnection.rollback();
-             * } else {
-             * dbConnection.commit();
-             * }
-             */
         } catch (SQLException SQLEx) {
-            System.err.println(SQLEx.getClass().getName() + ": " + SQLEx.getMessage());
+            Log.save("error", SQLEx);
         }
         // After the insert statement, return the updated cardDb table rows
         ResultSet dbResultSet = selectCardDb();

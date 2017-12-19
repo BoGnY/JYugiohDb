@@ -29,7 +29,7 @@ public class Version {
             appVersionRevision = appVersions[2];
         } catch (ArrayIndexOutOfBoundsException Ex) {
         } catch (Exception Ex) {
-            MainApp.logger.error(Ex);
+            Log.save("error", Ex);
         }
         if ((appVersionRevision != null) & (appVersionRevision != "0")) {
             return appVersionMajor + "." + appVersionMinor + "." + appVersionRevision + " build " + appVersionBuild;
