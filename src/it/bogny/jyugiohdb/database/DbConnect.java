@@ -4,9 +4,10 @@
 
 package it.bogny.jyugiohdb.database;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
+import it.bogny.jyugiohdb.util.Log;
 
 /**
  * @author BoGnY
@@ -22,16 +23,15 @@ public class DbConnect {
         Connection dbConnection = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            dbConnection = DriverManager.getConnection("jdbc:sqlite:yugiohdb.db");
-            // create a database connection
-            // Statement statement = dbConnection.createStatement();
-            // statement.setQueryTimeout(30); // set timeout to 30 sec.
-        } catch (SQLException SQLEx) {
-            // if the error message is "out of memory",
-            // it probably means no database file is found
-            System.err.println(SQLEx.getClass().getName() + ": " + SQLEx.getMessage());
+            if (new File("yugiohdb.db").exists()) {
+                // create a database connection
+                dbConnection = DriverManager.getConnection("jdbc:sqlite:yugiohdb.db");
+                Log.save("debug", "Database file found: yugiohdb.db");
+            } else {
+                Log.save("fatal", "SQL error or missing database");
+            }
         } catch (Exception Ex) {
-            System.err.println(Ex.getClass().getName() + ": " + Ex.getMessage());
+            Log.save("fatal", Ex);
         }
         return dbConnection;
     }

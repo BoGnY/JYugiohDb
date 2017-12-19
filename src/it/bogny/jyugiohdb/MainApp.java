@@ -8,11 +8,10 @@ import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.config.Configurator;
 import it.bogny.jyugiohdb.database.DbCardDbTable;
 import it.bogny.jyugiohdb.model.Card;
+import it.bogny.jyugiohdb.util.Log;
 import it.bogny.jyugiohdb.util.Version;
 import it.bogny.jyugiohdb.view.CardOverviewController;
 import javafx.application.Application;
@@ -30,7 +29,6 @@ import javafx.stage.Stage;
  * @author BoGnY
  */
 public class MainApp extends Application {
-    public static Logger logger = LogManager.getLogger(MainApp.class);
     private Stage primaryStage;
     private BorderPane mainLayout;
     public static final String fileSeparator = System.getProperty("file.separator");
@@ -69,10 +67,10 @@ public class MainApp extends Application {
                 cardData.add(new Card(rs.getInt("cardId")));
             }
         } catch (SQLException SQLEx) {
-            logger.fatal(SQLEx);
+            Log.save("fatal", SQLEx);
             // SQLEx.printStackTrace();
         } catch (Exception Ex) {
-            logger.fatal(Ex);
+            Log.save("fatal", Ex);
             // Ex.printStackTrace();
         }
         // Add some sample data
@@ -100,7 +98,7 @@ public class MainApp extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException IOEx) {
-            logger.fatal(IOEx);
+            Log.save("fatal", IOEx);
         }
     }
 
@@ -121,7 +119,7 @@ public class MainApp extends Application {
             CardOverviewController cardOverviewController = fxmlLoader.getController();
             cardOverviewController.setMainApp(this);
         } catch (IOException IOEx) {
-            logger.fatal(IOEx);
+            Log.save("fatal", IOEx);
         }
     }
 
@@ -137,7 +135,7 @@ public class MainApp extends Application {
     /**
      * The data as an observable list of Cards.
      */
-    private ObservableList<Card> cardData = FXCollections.observableArrayList();
+    public static ObservableList<Card> cardData = FXCollections.observableArrayList();
 
     /**
      * Main constructor
@@ -168,9 +166,9 @@ public class MainApp extends Application {
             inputProp = new FileInputStream("config" + fileSeparator + "app.properties");
             configProp.load(inputProp);
         } catch (FileNotFoundException FileNotFoundEx) {
-            logger.fatal(FileNotFoundEx);
+            Log.save("fatal", FileNotFoundEx);
         } catch (IOException IOEx) {
-            logger.fatal(IOEx);
+            Log.save("fatal", IOEx);
         }
 
         launch(args);
