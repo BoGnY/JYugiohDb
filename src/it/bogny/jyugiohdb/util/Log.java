@@ -1,6 +1,7 @@
 
 package it.bogny.jyugiohdb.util;
 
+import java.time.LocalDate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import it.bogny.jyugiohdb.MainApp;
@@ -99,9 +100,9 @@ public class Log {
     public static void alert(Exception Ex, boolean close) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.initOwner(null);
-        alert.setTitle(Ex.getClass().getName());
+        alert.setTitle("ERROR");
         alert.setHeaderText(Ex.getMessage());
-        alert.setContentText(Ex.getStackTrace().toString());
+        alert.setContentText("A serious error has occurred so, please, go to the project page https://github.com/BoGnY/JYugiohDB and open a new issue, describe your problem and attach this log file on report: /log/log-" + DateUtil.formatShort(LocalDate.now()) + ".log" + MainApp.lineSeparator + MainApp.lineSeparator + "Please past even this stack trace: " + MainApp.lineSeparator + Ex.getStackTrace().toString() + MainApp.lineSeparator + MainApp.lineSeparator + "Thanks," + MainApp.lineSeparator + "BoGnY");
         alert.showAndWait();
         if (close) {
             System.exit(1);
@@ -118,9 +119,9 @@ public class Log {
     public static void alert(String message, boolean close) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.initOwner(null);
-        alert.setTitle(message.getClass().getName());
-        alert.setHeaderText("ERROR");
-        alert.setContentText(message);
+        alert.setTitle("ERROR");
+        alert.setHeaderText(message);
+        alert.setContentText("A serious error has occurred so, please, go to the project page https://github.com/BoGnY/JYugiohDB and open a new issue, describe your problem and attach this log file on report: /log/log-" + DateUtil.formatShort(LocalDate.now()) + ".log" + MainApp.lineSeparator + MainApp.lineSeparator + "Thanks," + MainApp.lineSeparator + "BoGnY");
         alert.showAndWait();
         if (close) {
             System.exit(1);
