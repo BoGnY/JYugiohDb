@@ -14,6 +14,7 @@ import it.bogny.jyugiohdb.model.Card;
 import it.bogny.jyugiohdb.util.Log;
 import it.bogny.jyugiohdb.util.Version;
 import it.bogny.jyugiohdb.view.CardOverviewController;
+import it.bogny.jyugiohdb.view.MainLayoutController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,7 +31,7 @@ import javafx.stage.Stage;
  * @author BoGnY
  */
 public class MainApp extends Application {
-    private Stage primaryStage;
+    private static Stage primaryStage;
     private BorderPane mainLayout;
     public static final String fileSeparator = System.getProperty("file.separator");
     public static final String lineSeparator = System.getProperty("line.separator");
@@ -54,11 +55,11 @@ public class MainApp extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("YugiohDb v" + Version.formatVersion());
+        MainApp.primaryStage = primaryStage;
+        MainApp.primaryStage.setTitle("YugiohDb v" + Version.formatVersion());
 
         // Set the application icon.
-        this.primaryStage.getIcons().add(new Image("file:resources/images/app_icon.png"));
+        MainApp.primaryStage.getIcons().add(new Image("file:resources/images/app_icon.png"));
 
         initMainLayout();
 
@@ -92,14 +93,19 @@ public class MainApp extends Application {
      */
     public void initMainLayout() {
         try {
-            // Load root layout from fxml file.
+            // Load main layout from fxml file.
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(MainApp.class.getResource("view/MainLayout.fxml"));
             mainLayout = (BorderPane) fxmlLoader.load();
 
-            // Show the scene containing the root layout.
+            // Show the scene containing the main layout.
             Scene scene = new Scene(mainLayout);
             primaryStage.setScene(scene);
+
+            // Give the controller access to the main app.
+            MainLayoutController controller = fxmlLoader.getController();
+            controller.setMainApp(this);
+
             primaryStage.show();
         } catch (IOException IOEx) {
             Log.save("fatal", IOEx);
@@ -132,7 +138,7 @@ public class MainApp extends Application {
      * 
      * @return
      */
-    public Stage getPrimaryStage() {
+    public static Stage getPrimaryStage() {
         return primaryStage;
     }
 

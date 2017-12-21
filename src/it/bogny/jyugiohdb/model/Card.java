@@ -19,6 +19,10 @@ import javafx.beans.property.StringProperty;
  */
 
 public class Card {
+    // Current MIN and MAX values for cardId
+    public final static Integer MIN_ID = 4007;
+    public final static Integer MAX_ID = 13191;
+
     // For labels (card)
     private final IntegerProperty cardId;
     private final StringProperty cardNameIT;

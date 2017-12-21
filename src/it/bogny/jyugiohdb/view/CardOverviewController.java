@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 /**
  * View class for CardOverviewController.
@@ -19,6 +21,8 @@ import javafx.scene.control.TableView;
  */
 public class CardOverviewController {
     // For labels (card)
+    @FXML
+    private TextField cardIdItem;
     @FXML
     private Label cardIdText;
     @FXML
@@ -36,13 +40,13 @@ public class CardOverviewController {
     @FXML
     private Label cardPendulumValueText;
     @FXML
-    private Label cardPendulumTextText;
+    private TextArea cardPendulumTextText;
     @FXML
     private Label cardAtkText;
     @FXML
     private Label cardDefText;
     @FXML
-    private Label cardTextText;
+    private TextArea cardTextText;
     // For table columns (card sets)
     @FXML
     private TableView<Card> cardSetTable;
@@ -78,14 +82,16 @@ public class CardOverviewController {
     @FXML
     private void initialize() {
         // Initialize the card labels
-        showCardDetails(new Card(4007));
+        showCardDetails(new Card(Card.MIN_ID));
 
         // Initialize the card set table with the eight columns (which one is hide).
-        showCardSetDetails(new Card(4007));
+        showCardSetDetails(new Card(Card.MIN_ID));
 
         // Listen for selection changes and show the card set details when changed.
-        cardSetTable.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> showCardSetDetails(newValue));
+        cardSetTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showCardSetDetails(newValue));
+
+        // Put cardId in text field
+        cardIdItem.setText(cardIdText.getText().toString());
 
     }
 
@@ -111,6 +117,7 @@ public class CardOverviewController {
     private void showCardDetails(Card card) {
         if (card != null) {
             // Fill the labels with info from the card object.
+            cardIdItem.setText(Integer.toString(card.getCardId()));
             cardIdText.setText(Integer.toString(card.getCardId()));
             cardNameITText.setText(card.getCardNameIT());
             cardNameENText.setText(card.getCardNameEN());
@@ -126,6 +133,7 @@ public class CardOverviewController {
             // birthdayLabel.setText(DateUtil.format(card.getBirthday()));
         } else {
             // Person is null, remove all the text.
+            cardIdItem.setText("");
             cardIdText.setText("");
             cardNameITText.setText("");
             cardNameENText.setText("");
@@ -181,4 +189,93 @@ public class CardOverviewController {
              */
         }
     }
+
+    /**
+     * Called when the user clicks on the move first button.
+     */
+    @FXML
+    private void handleMoveFirstItem() {
+        try {
+            int selectedIndex = Integer.parseInt(cardIdItem.getText());
+            showCardDetails(null);
+            showCardSetDetails(null);
+            if ((selectedIndex >= Card.MIN_ID) && (selectedIndex <= Card.MAX_ID)) {
+                showCardDetails(new Card(MainApp.cardData.indexOf(selectedIndex)));
+                showCardSetDetails(new Card(selectedIndex + 1));
+            } else {
+                showCardDetails(new Card(Card.MIN_ID));
+                showCardSetDetails(new Card(Card.MIN_ID));
+            }
+        } catch (NumberFormatException NumberFormatEx) {
+            showCardDetails(new Card(Card.MIN_ID));
+            showCardSetDetails(new Card(Card.MIN_ID));
+        }
+    }
+
+    /**
+     * Called when the user clicks on the move previous button.
+     */
+    @FXML
+    private void handleMovePreviousItem() {
+        try {
+            int selectedIndex = Integer.parseInt(cardIdItem.getText());
+            showCardDetails(null);
+            showCardSetDetails(null);
+            if ((selectedIndex > Card.MIN_ID) && (selectedIndex <= Card.MAX_ID)) {
+                showCardDetails(new Card(selectedIndex - 1));
+                showCardSetDetails(new Card(selectedIndex - 1));
+            } else {
+                showCardDetails(new Card(Card.MIN_ID));
+                showCardSetDetails(new Card(Card.MIN_ID));
+            }
+        } catch (NumberFormatException NumberFormatEx) {
+            showCardDetails(new Card(Card.MIN_ID));
+            showCardSetDetails(new Card(Card.MIN_ID));
+        }
+    }
+
+    /**
+     * Called when the user clicks on the move next button.
+     */
+    @FXML
+    private void handleMoveNextItem() {
+        try {
+            int selectedIndex = Integer.parseInt(cardIdItem.getText());
+            showCardDetails(null);
+            showCardSetDetails(null);
+            if ((selectedIndex >= Card.MIN_ID) && (selectedIndex < Card.MAX_ID)) {
+                showCardDetails(new Card(selectedIndex + 1));
+                showCardSetDetails(new Card(selectedIndex + 1));
+            } else {
+                showCardDetails(new Card(Card.MAX_ID));
+                showCardSetDetails(new Card(Card.MAX_ID));
+            }
+        } catch (NumberFormatException NumberFormatEx) {
+            showCardDetails(new Card(Card.MAX_ID));
+            showCardSetDetails(new Card(Card.MAX_ID));
+        }
+    }
+
+    /**
+     * Called when the user clicks on the move last button.
+     */
+    @FXML
+    private void handleMoveLastItem() {
+        try {
+            int selectedIndex = Integer.parseInt(cardIdItem.getText());
+            showCardDetails(null);
+            showCardSetDetails(null);
+            if ((selectedIndex >= Card.MIN_ID) && (selectedIndex <= Card.MAX_ID)) {
+                showCardDetails(new Card(MainApp.cardData.lastIndexOf(selectedIndex)));
+                showCardSetDetails(new Card(selectedIndex + 1));
+            } else {
+                showCardDetails(new Card(Card.MAX_ID));
+                showCardSetDetails(new Card(Card.MAX_ID));
+            }
+        } catch (NumberFormatException NumberFormatEx) {
+            showCardDetails(new Card(Card.MAX_ID));
+            showCardSetDetails(new Card(Card.MAX_ID));
+        }
+    }
+
 }
