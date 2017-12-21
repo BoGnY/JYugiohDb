@@ -19,6 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -56,15 +57,18 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("YugiohDb v" + Version.formatVersion());
 
+        // Set the application icon.
+        this.primaryStage.getIcons().add(new Image("file:resources/images/app_icon.png"));
+
         initMainLayout();
 
         showCardOverview();
 
-        ResultSet rs = DbCardDbTable.selectCardDb();
+        ResultSet cardsResultSet = DbCardDbTable.selectCardDb();
         try {
-            while (rs.next()) {
-                System.out.println(rs.getInt("cardId") + "\t" + rs.getString("cardNameIT") + "\t" + rs.getString("cardNameEN"));
-                cardData.add(new Card(rs.getInt("cardId")));
+            while (cardsResultSet.next()) {
+                System.out.println(cardsResultSet.getInt("cardId") + "\t" + cardsResultSet.getString("cardNameIT") + "\t" + cardsResultSet.getString("cardNameEN"));
+                cardData.add(new Card(cardsResultSet.getInt("cardId")));
             }
         } catch (SQLException SQLEx) {
             Log.save("fatal", SQLEx);
