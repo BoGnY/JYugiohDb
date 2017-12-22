@@ -68,7 +68,7 @@ public class CardOverviewController {
     private TableColumn<Card, String> cardConditionColumn;
 
     // Reference to the main application.
-    private MainApp mainApp;
+    private MainApp MainApp;
 
     /**
      * The constructor. The constructor is called before the initialize() method.
@@ -100,11 +100,11 @@ public class CardOverviewController {
      * 
      * @param mainApp
      */
-    public void setMainApp(MainApp mainApp) {
-        this.mainApp = mainApp;
+    public void setMainApp(MainApp MainApp) {
+        this.MainApp = MainApp;
 
         // Add observable list data to the table
-        cardSetTable.setItems(mainApp.getCardData());
+        cardSetTable.setItems(MainApp.getCardData());
     }
 
     /**

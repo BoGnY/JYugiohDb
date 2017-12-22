@@ -65,27 +65,6 @@ public class MainApp extends Application {
 
         showCardOverview();
 
-        ResultSet cardsResultSet = DbCardDbTable.selectCardDb();
-        try {
-            while (cardsResultSet.next()) {
-                System.out.println(cardsResultSet.getInt("cardId") + "\t" + cardsResultSet.getString("cardNameIT") + "\t" + cardsResultSet.getString("cardNameEN"));
-                cardData.add(new Card(cardsResultSet.getInt("cardId")));
-            }
-        } catch (SQLException SQLEx) {
-            Log.save("fatal", SQLEx);
-            // SQLEx.printStackTrace();
-        } catch (Exception Ex) {
-            Log.save("fatal", Ex);
-            // Ex.printStackTrace();
-        }
-        // Add some sample data
-        /*
-         * cardData.add(new Card(4007));
-         * cardData.add(new Card(666));
-         * cardData.add(new Card(6969));
-         * cardData.add(new Card(13191));
-         */
-
     }
 
     /**
@@ -150,7 +129,29 @@ public class MainApp extends Application {
     /**
      * Main constructor
      */
-    public MainApp() {}
+    public MainApp() {
+        ResultSet cardsResultSet = DbCardDbTable.selectCardDb();
+        try {
+            while (cardsResultSet.next()) {
+                System.out.println(cardsResultSet.getInt("cardId") + "\t" + cardsResultSet.getString("cardNameIT") + "\t" + cardsResultSet.getString("cardNameEN"));
+                cardData.add(new Card(cardsResultSet.getInt("cardId")));
+            }
+        } catch (SQLException SQLEx) {
+            Log.save("fatal", SQLEx);
+            // SQLEx.printStackTrace();
+        } catch (Exception Ex) {
+            Log.save("fatal", Ex);
+            // Ex.printStackTrace();
+        }
+        // Add some sample data
+        /*
+         * cardData.add(new Card(4007));
+         * cardData.add(new Card(666));
+         * cardData.add(new Card(6969));
+         * cardData.add(new Card(13191));
+         */
+
+    }
 
     /**
      * Returns the data as an observable list of Cards.
