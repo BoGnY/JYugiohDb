@@ -99,12 +99,12 @@ public class MainApp extends Application {
             mainLayout = (BorderPane) fxmlLoader.load();
 
             // Show the scene containing the main layout.
-            Scene scene = new Scene(mainLayout);
-            primaryStage.setScene(scene);
+            Scene mainScene = new Scene(mainLayout);
+            primaryStage.setScene(mainScene);
 
             // Give the controller access to the main app.
-            MainLayoutController controller = fxmlLoader.getController();
-            controller.setMainApp(this);
+            MainLayoutController mainLayoutController = fxmlLoader.getController();
+            mainLayoutController.setMainApp(this);
 
             primaryStage.show();
         } catch (IOException IOEx) {
