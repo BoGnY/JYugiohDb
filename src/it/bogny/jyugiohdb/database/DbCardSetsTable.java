@@ -35,7 +35,7 @@ public class DbCardSetsTable {
             dbConnection = DbConnect.dbConnection();
             dbPreparedStatement = dbConnection.prepareStatement(sqlString);
             dbPreparedStatement.setInt(1, cardId);
-            dbResultSet = dbPreparedStatement.executeQuery(sqlString);
+            dbResultSet = dbPreparedStatement.executeQuery();
         } catch (SQLException SQLEx) {
             Log.save("error", SQLEx);
         }
