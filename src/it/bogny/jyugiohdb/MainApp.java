@@ -10,7 +10,9 @@ import java.sql.SQLException;
 import java.util.Properties;
 import org.apache.logging.log4j.core.config.Configurator;
 import it.bogny.jyugiohdb.database.DbCardDbTable;
+import it.bogny.jyugiohdb.database.DbCardSetsTable;
 import it.bogny.jyugiohdb.model.Card;
+import it.bogny.jyugiohdb.model.CardSet;
 import it.bogny.jyugiohdb.util.Log;
 import it.bogny.jyugiohdb.util.Version;
 import it.bogny.jyugiohdb.view.CardOverviewController;
@@ -125,23 +127,36 @@ public class MainApp extends Application {
      * The data as an observable list of Cards.
      */
     public static ObservableList<Card> cardData = FXCollections.observableArrayList();
+    /**
+     * The data as an observable list of Cards.
+     */
+    public static ObservableList<CardSet> cardSetData = FXCollections.observableArrayList();
 
     /**
      * Main constructor
      */
     public MainApp() {
+        // Load all cards on cardData ObservableList
         ResultSet cardsResultSet = DbCardDbTable.selectCardDb();
         try {
             while (cardsResultSet.next()) {
-                System.out.println(cardsResultSet.getInt("cardId") + "\t" + cardsResultSet.getString("cardNameIT") + "\t" + cardsResultSet.getString("cardNameEN"));
-                cardData.add(new Card(cardsResultSet.getInt("cardId")));
+                int cardId = cardsResultSet.getInt("cardId");
+
+                System.out.println(cardId + "\t" + cardsResultSet.getString("cardNameIT") + "\t" + cardsResultSet.getString("cardNameEN"));
+                cardData.add(new Card(cardId));
+
+                // Load all card sets on cardSetsData ObservableList
+                ResultSet cardsSetResultSet = DbCardSetsTable.selectCardSets(cardId);
+                while (cardsSetResultSet.next()) {
+                    System.out.println(cardsSetResultSet.getInt("cardId") + "\t" + cardsSetResultSet.getInt("listId") + "\t" + cardsSetResultSet.getString("cardSetCode"));
+                    cardSetData.add(new CardSet(cardsSetResultSet.getInt("cardId"), cardsSetResultSet.getInt("listId")));
+                }
+
             }
         } catch (SQLException SQLEx) {
             Log.save("fatal", SQLEx);
-            // SQLEx.printStackTrace();
         } catch (Exception Ex) {
             Log.save("fatal", Ex);
-            // Ex.printStackTrace();
         }
         // Add some sample data
         /*
@@ -160,6 +175,15 @@ public class MainApp extends Application {
      */
     public ObservableList<Card> getCardData() {
         return cardData;
+    }
+
+    /**
+     * Returns the data as an observable list of Cards.
+     * 
+     * @return
+     */
+    public ObservableList<CardSet> getCardSetData() {
+        return cardSetData;
     }
 
     /**

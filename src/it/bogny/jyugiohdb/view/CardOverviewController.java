@@ -7,6 +7,7 @@ package it.bogny.jyugiohdb.view;
 import java.time.LocalDate;
 import it.bogny.jyugiohdb.MainApp;
 import it.bogny.jyugiohdb.model.Card;
+import it.bogny.jyugiohdb.model.CardSet;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -49,23 +50,23 @@ public class CardOverviewController {
     private TextArea cardTextText;
     // For table columns (card sets)
     @FXML
-    private TableView<Card> cardSetTable;
+    private TableView<CardSet> cardSetTable;
     @FXML
-    private TableColumn<Card, Integer> listIdColumn;
+    private TableColumn<CardSet, Integer> listIdColumn;
     @FXML
-    private TableColumn<Card, String> cardSetCodeColumn;
+    private TableColumn<CardSet, String> cardSetCodeColumn;
     @FXML
-    private TableColumn<Card, LocalDate> cardSetDateColumn;
+    private TableColumn<CardSet, LocalDate> cardSetDateColumn;
     @FXML
-    private TableColumn<Card, String> cardSetLangColumn;
+    private TableColumn<CardSet, String> cardSetLangColumn;
     @FXML
-    private TableColumn<Card, String> cardSetNameColumn;
+    private TableColumn<CardSet, String> cardSetNameColumn;
     @FXML
-    private TableColumn<Card, String> cardSetRarityColumn;
+    private TableColumn<CardSet, String> cardSetRarityColumn;
     @FXML
-    private TableColumn<Card, Integer> cardCountColumn;
+    private TableColumn<CardSet, Integer> cardCountColumn;
     @FXML
-    private TableColumn<Card, String> cardConditionColumn;
+    private TableColumn<CardSet, String> cardConditionColumn;
 
     // Reference to the main application.
     private MainApp MainApp;
@@ -85,7 +86,7 @@ public class CardOverviewController {
         showCardDetails(new Card(Card.MIN_ID));
 
         // Initialize the card set table with the eight columns (which one is hide).
-        showCardSetDetails(new Card(Card.MIN_ID));
+        // showCardSetDetails(new Card(Card.MIN_ID));
 
         // Listen for selection changes and show the card set details when changed.
         cardSetTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showCardSetDetails(newValue));
@@ -98,13 +99,13 @@ public class CardOverviewController {
     /**
      * Is called by the main application to give a reference back to itself.
      * 
-     * @param mainApp
+     * @param MainApp
      */
     public void setMainApp(MainApp MainApp) {
         this.MainApp = MainApp;
 
-        // Add observable list data to the table
-        cardSetTable.setItems(MainApp.getCardData());
+        // Add observable list data to the card sets table
+        cardSetTable.setItems(MainApp.getCardSetData());
     }
 
     /**
@@ -156,8 +157,8 @@ public class CardOverviewController {
      * @param card
      *            The card id or null
      */
-    private void showCardSetDetails(Card card) {
-        if (card != null) {
+    private void showCardSetDetails(CardSet cardSet) {
+        if (cardSet != null) {
             // Fill the labels with info from the card set object.
             listIdColumn.setCellValueFactory(cellData -> cellData.getValue().listIdProperty().asObject());
             cardSetCodeColumn.setCellValueFactory(cellData -> cellData.getValue().cardSetCodeProperty());
@@ -201,14 +202,14 @@ public class CardOverviewController {
             showCardSetDetails(null);
             if ((selectedIndex >= Card.MIN_ID) && (selectedIndex <= Card.MAX_ID)) {
                 showCardDetails(new Card(MainApp.cardData.indexOf(selectedIndex)));
-                showCardSetDetails(new Card(selectedIndex + 1));
+                // showCardSetDetails(new Card(selectedIndex + 1));
             } else {
                 showCardDetails(new Card(Card.MIN_ID));
-                showCardSetDetails(new Card(Card.MIN_ID));
+                // showCardSetDetails(new Card(Card.MIN_ID));
             }
         } catch (NumberFormatException NumberFormatEx) {
             showCardDetails(new Card(Card.MIN_ID));
-            showCardSetDetails(new Card(Card.MIN_ID));
+            // showCardSetDetails(new Card(Card.MIN_ID));
         }
     }
 
@@ -223,14 +224,14 @@ public class CardOverviewController {
             showCardSetDetails(null);
             if ((selectedIndex > Card.MIN_ID) && (selectedIndex <= Card.MAX_ID)) {
                 showCardDetails(new Card(selectedIndex - 1));
-                showCardSetDetails(new Card(selectedIndex - 1));
+                // showCardSetDetails(new Card(selectedIndex - 1));
             } else {
                 showCardDetails(new Card(Card.MIN_ID));
-                showCardSetDetails(new Card(Card.MIN_ID));
+                // showCardSetDetails(new Card(Card.MIN_ID));
             }
         } catch (NumberFormatException NumberFormatEx) {
             showCardDetails(new Card(Card.MIN_ID));
-            showCardSetDetails(new Card(Card.MIN_ID));
+            // showCardSetDetails(new Card(Card.MIN_ID));
         }
     }
 
@@ -245,14 +246,14 @@ public class CardOverviewController {
             showCardSetDetails(null);
             if ((selectedIndex >= Card.MIN_ID) && (selectedIndex < Card.MAX_ID)) {
                 showCardDetails(new Card(selectedIndex + 1));
-                showCardSetDetails(new Card(selectedIndex + 1));
+                // showCardSetDetails(new Card(selectedIndex + 1));
             } else {
                 showCardDetails(new Card(Card.MAX_ID));
-                showCardSetDetails(new Card(Card.MAX_ID));
+                // showCardSetDetails(new Card(Card.MAX_ID));
             }
         } catch (NumberFormatException NumberFormatEx) {
             showCardDetails(new Card(Card.MAX_ID));
-            showCardSetDetails(new Card(Card.MAX_ID));
+            // showCardSetDetails(new Card(Card.MAX_ID));
         }
     }
 
@@ -267,14 +268,14 @@ public class CardOverviewController {
             showCardSetDetails(null);
             if ((selectedIndex >= Card.MIN_ID) && (selectedIndex <= Card.MAX_ID)) {
                 showCardDetails(new Card(MainApp.cardData.lastIndexOf(selectedIndex)));
-                showCardSetDetails(new Card(selectedIndex + 1));
+                // showCardSetDetails(new Card(selectedIndex + 1));
             } else {
                 showCardDetails(new Card(Card.MAX_ID));
-                showCardSetDetails(new Card(Card.MAX_ID));
+                // showCardSetDetails(new Card(Card.MAX_ID));
             }
         } catch (NumberFormatException NumberFormatEx) {
             showCardDetails(new Card(Card.MAX_ID));
-            showCardSetDetails(new Card(Card.MAX_ID));
+            // showCardSetDetails(new Card(Card.MAX_ID));
         }
     }
 
