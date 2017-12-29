@@ -10,7 +10,7 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/JYugiohDb/lib/sqlite-jdbc-3.21.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Luca/Progetti/JYugiohDb/lib/javafx8.jar" sourcepath="lib/javafx8-src.zip">
+	<classpathentry exported="true" kind="lib" path="lib/javafx8.jar" sourcepath="lib/javafx8-src.zip">
 		<attributes>
 			<attribute name="javadoc_location" value="http://docs.oracle.com/javase/8/javafx/api/"/>
 		</attributes>
