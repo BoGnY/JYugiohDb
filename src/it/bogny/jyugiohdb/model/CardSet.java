@@ -5,12 +5,16 @@
 package it.bogny.jyugiohdb.model;
 
 import java.time.LocalDate;
+import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * Model class for a Card.
@@ -29,30 +33,79 @@ public class CardSet {
     private final StringProperty cardSetRarity;
     private final IntegerProperty cardCount;
     private final StringProperty cardCondition;
+    private final FloatProperty cardPriceHigh;
+    private final FloatProperty cardPriceLow;
+    private final FloatProperty cardPriceAverage;
+    /**
+     * The data as an observable list of Cards.
+     */
+    public static ObservableList<CardSet> cardSetData = FXCollections.observableArrayList();
 
     /**
-     * Default constructor.
+     * Returns the data as an observable list of CardSets.
+     * 
+     * @return
      */
-    public CardSet() {
-        this(0, 0);
+    public static ObservableList<CardSet> getCardSetData() {
+        return cardSetData;
     }
 
     /**
-     * Constructor with some initial data.
+     * Constructor with one data.
      * 
-     * @param listId
+     * @param cardId
      */
-    public CardSet(int cardId, int listId) {
+    public CardSet(int cardId) {
+        int selectedIndex = 0;
+        for (int i = 0; i < cardSetData.size(); i++) {
+            if ((cardSetData.get(i).getCardId() == cardId)) {
+                selectedIndex = i;
+            }
+        }
+        this.cardId = cardSetData.get(selectedIndex).cardIdProperty();
+        this.listId = cardSetData.get(selectedIndex).listIdProperty();
+        this.cardSetLang = cardSetData.get(selectedIndex).cardSetLangProperty();
+        this.cardSetDate = cardSetData.get(selectedIndex).cardSetDateProperty();
+        this.cardSetCode = cardSetData.get(selectedIndex).cardSetCodeProperty();
+        this.cardSetName = cardSetData.get(selectedIndex).cardSetNameProperty();
+        this.cardSetRarity = cardSetData.get(selectedIndex).cardSetRarityProperty();
+        this.cardCount = cardSetData.get(selectedIndex).cardCountProperty();
+        this.cardCondition = cardSetData.get(selectedIndex).cardConditionProperty();
+        this.cardPriceHigh = cardSetData.get(selectedIndex).cardPriceHighProperty();
+        this.cardPriceLow = cardSetData.get(selectedIndex).cardPriceLowProperty();
+        this.cardPriceAverage = cardSetData.get(selectedIndex).cardPriceAverageProperty();
+    }
+
+    /**
+     * Constructor with all data.
+     * 
+     * @param cardId
+     * @param listId
+     * @param cardSetLang
+     * @param cardSetDate
+     * @param cardSetCode
+     * @param cardSetName
+     * @param cardSetRarity
+     * @param cardCount
+     * @param cardCondition
+     * @param cardPriceHigh
+     * @param cardPriceLow
+     * @param cardPriceAverage
+     */
+    public CardSet(int cardId, int listId, String cardSetLang, LocalDate cardSetDate, String cardSetCode, String cardSetName, String cardSetRarity, int cardCount, String cardCondition, float cardPriceHigh, float cardPriceLow, float cardPriceAverage) {
         this.cardId = new SimpleIntegerProperty(cardId);
         // For table columns (card sets)
         this.listId = new SimpleIntegerProperty(listId);
-        this.cardSetLang = new SimpleStringProperty();
-        this.cardSetDate = new SimpleObjectProperty<LocalDate>(LocalDate.of(1969, 1, 1));
-        this.cardSetCode = new SimpleStringProperty();
-        this.cardSetName = new SimpleStringProperty();
-        this.cardSetRarity = new SimpleStringProperty();
-        this.cardCount = new SimpleIntegerProperty();
-        this.cardCondition = new SimpleStringProperty();
+        this.cardSetLang = new SimpleStringProperty(cardSetLang);
+        this.cardSetDate = new SimpleObjectProperty<LocalDate>(cardSetDate);
+        this.cardSetCode = new SimpleStringProperty(cardSetCode);
+        this.cardSetName = new SimpleStringProperty(cardSetName);
+        this.cardSetRarity = new SimpleStringProperty(cardSetRarity);
+        this.cardCount = new SimpleIntegerProperty(cardCount);
+        this.cardCondition = new SimpleStringProperty(cardCondition);
+        this.cardPriceHigh = new SimpleFloatProperty(cardPriceHigh);
+        this.cardPriceLow = new SimpleFloatProperty(cardPriceLow);
+        this.cardPriceAverage = new SimpleFloatProperty(cardPriceAverage);
     }
 
     public int getCardId() {
@@ -162,6 +215,42 @@ public class CardSet {
 
     public StringProperty cardConditionProperty() {
         return cardCondition;
+    }
+
+    public float getCardPriceHigh() {
+        return cardPriceHigh.get();
+    }
+
+    public void setCardPriceHigh(float cardPriceHigh) {
+        this.cardPriceHigh.set(cardPriceHigh);
+    }
+
+    public FloatProperty cardPriceHighProperty() {
+        return cardPriceHigh;
+    }
+
+    public float getCardPriceLow() {
+        return cardPriceLow.get();
+    }
+
+    public void setCardPriceLow(float cardPriceLow) {
+        this.cardPriceLow.set(cardPriceLow);
+    }
+
+    public FloatProperty cardPriceLowProperty() {
+        return cardPriceLow;
+    }
+
+    public float getCardPriceAverage() {
+        return cardPriceAverage.get();
+    }
+
+    public void setCardPriceAverage(float cardPriceAverage) {
+        this.cardPriceAverage.set(cardPriceAverage);
+    }
+
+    public FloatProperty cardPriceAverageProperty() {
+        return cardPriceAverage;
     }
 
 }

@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import org.apache.logging.log4j.core.config.Configurator;
 import it.bogny.jyugiohdb.database.DbCardDbTable;
-import it.bogny.jyugiohdb.database.DbCardSetsTable;
+import it.bogny.jyugiohdb.database.DbCardSetsList;
 import it.bogny.jyugiohdb.model.Card;
 import it.bogny.jyugiohdb.model.CardSet;
 import it.bogny.jyugiohdb.util.Log;
@@ -18,8 +20,6 @@ import it.bogny.jyugiohdb.util.Version;
 import it.bogny.jyugiohdb.view.CardOverviewController;
 import it.bogny.jyugiohdb.view.MainLayoutController;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -124,15 +124,6 @@ public class MainApp extends Application {
     }
 
     /**
-     * The data as an observable list of Cards.
-     */
-    public static ObservableList<Card> cardData = FXCollections.observableArrayList();
-    /**
-     * The data as an observable list of Cards.
-     */
-    public static ObservableList<CardSet> cardSetData = FXCollections.observableArrayList();
-
-    /**
      * Main constructor
      */
     public MainApp() {
@@ -140,50 +131,21 @@ public class MainApp extends Application {
         ResultSet cardsResultSet = DbCardDbTable.selectCardDb();
         try {
             while (cardsResultSet.next()) {
-                int cardId = cardsResultSet.getInt("cardId");
-
-                System.out.println(cardId + "\t" + cardsResultSet.getString("cardNameIT") + "\t" + cardsResultSet.getString("cardNameEN"));
-                cardData.add(new Card(cardId));
+                System.out.println(cardsResultSet.getInt("cardId") + "\t" + cardsResultSet.getString("cardNameIT") + "\t" + cardsResultSet.getString("cardNameEN"));
+                Card.cardData.add(new Card(cardsResultSet.getInt("cardId"), cardsResultSet.getString("cardNameIT"), cardsResultSet.getString("cardNameEN"), cardsResultSet.getString("cardAttribute"), cardsResultSet.getInt("cardLevel"), cardsResultSet.getString("cardMonsterType"), cardsResultSet.getString("cardType"), cardsResultSet.getString("cardPendulumValue"), cardsResultSet.getString("cardPendulumText"), cardsResultSet.getString("cardAtk"), cardsResultSet.getString("cardDef"), cardsResultSet.getString("cardText")));
 
                 // Load all card sets on cardSetsData ObservableList
-                ResultSet cardsSetResultSet = DbCardSetsTable.selectCardSets(cardId);
+                ResultSet cardsSetResultSet = DbCardSetsList.selectCardSetsList(cardsResultSet.getInt("cardId"));
                 while (cardsSetResultSet.next()) {
                     System.out.println(cardsSetResultSet.getInt("cardId") + "\t" + cardsSetResultSet.getInt("listId") + "\t" + cardsSetResultSet.getString("cardSetCode"));
-                    cardSetData.add(new CardSet(cardsSetResultSet.getInt("cardId"), cardsSetResultSet.getInt("listId")));
+                    CardSet.cardSetData.add(new CardSet(cardsSetResultSet.getInt("cardId"), cardsSetResultSet.getInt("listId"), cardsSetResultSet.getString("cardSetLang"), LocalDate.parse(cardsSetResultSet.getObject("cardSetDate").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd")), cardsSetResultSet.getString("cardSetCode"), cardsSetResultSet.getString("cardSetName"), cardsSetResultSet.getString("cardSetRarity"), cardsSetResultSet.getInt("cardCount"), cardsSetResultSet.getString("cardCondition"), cardsSetResultSet.getFloat("cardPriceHigh"), cardsSetResultSet.getFloat("cardPriceLow"), cardsSetResultSet.getFloat("cardPriceAverage")));
                 }
-
             }
         } catch (SQLException SQLEx) {
             Log.save("fatal", SQLEx);
         } catch (Exception Ex) {
             Log.save("fatal", Ex);
         }
-        // Add some sample data
-        /*
-         * cardData.add(new Card(4007));
-         * cardData.add(new Card(666));
-         * cardData.add(new Card(6969));
-         * cardData.add(new Card(13191));
-         */
-
-    }
-
-    /**
-     * Returns the data as an observable list of Cards.
-     * 
-     * @return
-     */
-    public ObservableList<Card> getCardData() {
-        return cardData;
-    }
-
-    /**
-     * Returns the data as an observable list of Cards.
-     * 
-     * @return
-     */
-    public ObservableList<CardSet> getCardSetData() {
-        return cardSetData;
     }
 
     /**

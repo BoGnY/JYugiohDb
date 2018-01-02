@@ -21,7 +21,7 @@ public class DbCardSetsList {
      * @return The ResultSet of the list of sets for the specified card
      */
     public static ResultSet selectCardSetsList(int cardId) {
-        String sqlString = "SELECT cardSets.listId AS listIdSets, cardSets.cardId, cardSets.cardSetLang, cardSets.cardSetDate, TRIM(cardSets.cardSetCode) AS cardSetCode, cardSets.cardSetName, TRIM(cardSets.cardSetRarity) AS cardSetRarity, cardList.listId AS listIdList, cardList.cardCount, cardList.cardCondition, cardList.cardPriceHigh, cardList.cardPriceLow, cardList.cardPriceAverage FROM cardSets LEFT OUTER JOIN cardList ON (cardSets.listId = cardList.listId) AND (cardSets.cardSetCode = cardList.cardSetCode) WHERE (cardSets.cardId = ?) ORDER BY cardSets.cardSetDate DESC";
+        String sqlString = "SELECT cardSets.listId AS listId, cardSets.cardId, cardSets.cardSetLang, cardSets.cardSetDate, TRIM(cardSets.cardSetCode) AS cardSetCode, cardSets.cardSetName, TRIM(cardSets.cardSetRarity) AS cardSetRarity, cardList.cardCount, cardList.cardCondition, cardList.cardPriceHigh, cardList.cardPriceLow, cardList.cardPriceAverage FROM cardSets LEFT OUTER JOIN cardList ON (cardSets.listId = cardList.listId) AND (cardSets.cardSetCode = cardList.cardSetCode) WHERE (cardSets.cardId = ?) ORDER BY cardSets.cardSetDate DESC";
 
         Connection dbConnection = null;
         PreparedStatement dbPreparedStatement = null;

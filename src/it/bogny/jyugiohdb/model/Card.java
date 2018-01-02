@@ -8,6 +8,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * Model class for a Card.
@@ -25,7 +27,7 @@ public class Card {
     private final StringProperty cardNameIT;
     private final StringProperty cardNameEN;
     private final StringProperty cardAttribute;
-    private final IntegerProperty cardLevelInt;
+    private final IntegerProperty cardLevel;
     private final StringProperty cardMonsterType;
     private final StringProperty cardType;
     private final StringProperty cardPendulumValue;
@@ -33,33 +35,77 @@ public class Card {
     private final StringProperty cardAtk;
     private final StringProperty cardDef;
     private final StringProperty cardText;
+    /**
+     * The data as an observable list of Cards.
+     */
+    public static ObservableList<Card> cardData = FXCollections.observableArrayList();
 
     /**
-     * Default constructor.
+     * Returns the data as an observable list of Cards.
+     * 
+     * @return
      */
-    public Card() {
-        this(0);
+    public ObservableList<Card> getCardData() {
+        FXCollections.sort(cardData, null);
+        return cardData;
     }
 
     /**
-     * Constructor with some initial data.
+     * Constructor with one data.
      * 
      * @param cardId
      */
     public Card(int cardId) {
+        int selectedIndex = 0;
+        for (int i = 0; i < cardData.size(); i++) {
+            if ((cardData.get(i).getCardId() == cardId)) {
+                selectedIndex = i;
+            }
+        }
+        this.cardId = cardData.get(selectedIndex).cardIdProperty();
+        this.cardNameIT = cardData.get(selectedIndex).cardNameITProperty();
+        this.cardNameEN = cardData.get(selectedIndex).cardNameENProperty();
+        this.cardAttribute = cardData.get(selectedIndex).cardAttributeProperty();
+        this.cardLevel = cardData.get(selectedIndex).cardLevelProperty();
+        this.cardMonsterType = cardData.get(selectedIndex).cardMonsterTypeProperty();
+        this.cardType = cardData.get(selectedIndex).cardTypeProperty();
+        this.cardPendulumValue = cardData.get(selectedIndex).cardPendulumValueProperty();
+        this.cardPendulumText = cardData.get(selectedIndex).cardPendulumTextProperty();
+        this.cardAtk = cardData.get(selectedIndex).cardAtkProperty();
+        this.cardDef = cardData.get(selectedIndex).cardDefProperty();
+        this.cardText = cardData.get(selectedIndex).cardTextProperty();
+    }
+
+    /**
+     * Constructor with all data.
+     * 
+     * @param cardId
+     * @param cardNameIT
+     * @param cardNameEN
+     * @param cardAttribute
+     * @param cardLevel
+     * @param cardMonsterType
+     * @param cardType
+     * @param cardPendulumValue
+     * @param cardPendulumText
+     * @param cardAtk
+     * @param cardDef
+     * @param cardText
+     */
+    public Card(int cardId, String cardNameIT, String cardNameEN, String cardAttribute, int cardLevel, String cardMonsterType, String cardType, String cardPendulumValue, String cardPendulumText, String cardAtk, String cardDef, String cardText) {
         // For labels (card)
         this.cardId = new SimpleIntegerProperty(cardId);
-        this.cardNameIT = new SimpleStringProperty();
-        this.cardNameEN = new SimpleStringProperty();
-        this.cardAttribute = new SimpleStringProperty();
-        this.cardLevelInt = new SimpleIntegerProperty();
-        this.cardMonsterType = new SimpleStringProperty();
-        this.cardType = new SimpleStringProperty();
-        this.cardPendulumValue = new SimpleStringProperty();
-        this.cardPendulumText = new SimpleStringProperty();
-        this.cardAtk = new SimpleStringProperty();
-        this.cardDef = new SimpleStringProperty();
-        this.cardText = new SimpleStringProperty();
+        this.cardNameIT = new SimpleStringProperty(cardNameIT);
+        this.cardNameEN = new SimpleStringProperty(cardNameEN);
+        this.cardAttribute = new SimpleStringProperty(cardAttribute);
+        this.cardLevel = new SimpleIntegerProperty(cardLevel);
+        this.cardMonsterType = new SimpleStringProperty(cardMonsterType);
+        this.cardType = new SimpleStringProperty(cardType);
+        this.cardPendulumValue = new SimpleStringProperty(cardPendulumValue);
+        this.cardPendulumText = new SimpleStringProperty(cardPendulumText);
+        this.cardAtk = new SimpleStringProperty(cardAtk);
+        this.cardDef = new SimpleStringProperty(cardDef);
+        this.cardText = new SimpleStringProperty(cardText);
     }
 
     // For labels (card)
@@ -111,16 +157,16 @@ public class Card {
         return cardAttribute;
     }
 
-    public int getCardLevelInt() {
-        return cardLevelInt.get();
+    public int getCardLevel() {
+        return cardLevel.get();
     }
 
-    public void setCardLevelInt(int cardLevelInt) {
-        this.cardLevelInt.set(cardLevelInt);
+    public void setCardLevel(int cardLevel) {
+        this.cardLevel.set(cardLevel);
     }
 
-    public IntegerProperty cardLevelIntProperty() {
-        return cardLevelInt;
+    public IntegerProperty cardLevelProperty() {
+        return cardLevel;
     }
 
     public String getCardMonsterType() {
