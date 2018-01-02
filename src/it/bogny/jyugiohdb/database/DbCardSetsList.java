@@ -21,7 +21,7 @@ public class DbCardSetsList {
      * @return The ResultSet of the list of sets for the specified card
      */
     public static ResultSet selectCardSetsList(int cardId) {
-        String sqlString = "SELECT cardSets.listId AS listIdSets, cardSets.cardId, cardSets.cardSetLang, cardSets.cardSetDate, cardSets.cardSetCode, cardSets.cardSetName, cardSets.cardSetRarity, cardList.listId AS listIdList, cardList.cardCount, cardList.cardCondition FROM cardSets LEFT OUTER JOIN cardList ON (cardSets.listId = cardList.listId) AND (cardSets.cardSetCode = cardList.cardSetCode) WHERE (cardSets.cardId = ?) ORDER BY cardSets.cardSetDate DESC";
+        String sqlString = "SELECT cardSets.listId AS listIdSets, cardSets.cardId, cardSets.cardSetLang, cardSets.cardSetDate, cardSets.cardSetCode, cardSets.cardSetName, cardSets.cardSetRarity, cardList.listId AS listIdList, cardList.cardCount, cardList.cardCondition, cardList.cardPriceHigh, cardList.cardPriceLow, cardList.cardPriceAverage FROM cardSets LEFT OUTER JOIN cardList ON (cardSets.listId = cardList.listId) AND (cardSets.cardSetCode = cardList.cardSetCode) WHERE (cardSets.cardId = ?) ORDER BY cardSets.cardSetDate DESC";
 
         Connection dbConnection = null;
         PreparedStatement dbPreparedStatement = null;
@@ -30,7 +30,7 @@ public class DbCardSetsList {
             dbConnection = DbConnect.dbConnection();
             dbPreparedStatement = dbConnection.prepareStatement(sqlString);
             dbPreparedStatement.setInt(1, cardId);
-            dbResultSet = dbPreparedStatement.executeQuery(sqlString);
+            dbResultSet = dbPreparedStatement.executeQuery();
         } catch (SQLException SQLEx) {
             Log.save("error", SQLEx);
         }
