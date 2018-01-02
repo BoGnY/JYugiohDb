@@ -3,7 +3,6 @@
 .metadata
 bin/
 build/
-log/
 tmp/
 *.tmp
 *.bak
@@ -11,7 +10,6 @@ tmp/
 *~.nib
 local.properties
 .loadpath
-.recommenders
 
 # External tool builders
 .externalToolBuilders/
@@ -50,3 +48,7 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
+
+#JYugiohDb project
+log/
+/yugiohdb.db
