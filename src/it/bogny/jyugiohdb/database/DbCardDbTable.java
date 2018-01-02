@@ -23,7 +23,7 @@ public class DbCardDbTable {
      * @return The ResultSet of all cardDb table rows
      */
     public static ResultSet selectCardDb() {
-        String sqlString = "SELECT * FROM cardDb";
+        String sqlString = "SELECT * FROM cardDb ORDER BY cardId ASC";
 
         Connection dbConnection = null;
         Statement dbStatement = null;
