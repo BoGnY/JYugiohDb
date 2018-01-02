@@ -84,14 +84,17 @@
                <children>
                   <TableView fx:id="cardSetTable" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="780.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                     <columns>
-                      <TableColumn fx:id="listIdColumn" editable="false" prefWidth="75.0" resizable="false" sortable="false" text="listId" visible="false" />
-                      <TableColumn fx:id="cardSetCodeColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" resizable="false" sortable="false" text="cardSetCode" />
-                        <TableColumn fx:id="cardSetDateColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="70.0" resizable="false" text="cardSetDate" />
-                        <TableColumn fx:id="cardSetLangColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="20.0" resizable="false" sortable="false" text="cardSetLang" />
-                        <TableColumn fx:id="cardSetNameColumn" editable="false" maxWidth="500.0" minWidth="-Infinity" prefWidth="300.0" resizable="false" text="cardSetName" />
-                        <TableColumn fx:id="cardSetRarityColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="25.0" resizable="false" sortable="false" text="cardSetRarity" />
-                        <TableColumn fx:id="cardCountColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="30.0" resizable="false" sortable="false" text="cardCount" />
-                        <TableColumn fx:id="cardConditionColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="95.0" resizable="false" sortable="false" text="cardCondition" />
+                      <TableColumn fx:id="listIdColumn" editable="false" prefWidth="75.0" resizable="false" sortable="false" text="ID" visible="false" />
+                      <TableColumn fx:id="cardSetCodeColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" resizable="false" sortable="false" text="CODE" />
+                        <TableColumn fx:id="cardSetDateColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" resizable="false" text="DATE" />
+                        <TableColumn fx:id="cardSetLangColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="40.0" resizable="false" sortable="false" text="LANG" />
+                        <TableColumn fx:id="cardSetNameColumn" editable="false" maxWidth="500.0" minWidth="-Infinity" prefWidth="350.0" resizable="false" text="NAME" />
+                        <TableColumn fx:id="cardSetRarityColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="50.0" resizable="false" sortable="false" text="RARITY" />
+                        <TableColumn fx:id="cardCountColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="50.0" resizable="false" sortable="false" text="COUNT" />
+                        <TableColumn fx:id="cardConditionColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="95.0" resizable="false" sortable="false" text="CONDITION" />
+                        <TableColumn fx:id="cardPriceHighColumn" editable="false" prefWidth="75.0" resizable="false" sortable="false" text="PRICE HIGH" visible="false" />
+                        <TableColumn fx:id="cardPriceLowColumn" editable="false" prefWidth="75.0" resizable="false" sortable="false" text="PRICE LOW" visible="false" />
+                        <TableColumn fx:id="cardPriceAverageColumn" editable="false" prefWidth="75.0" resizable="false" sortable="false" text="PRICE AVERAGE" visible="false" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
