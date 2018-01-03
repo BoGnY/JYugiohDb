@@ -1,11 +1,10 @@
 /**
  *
- * This package contains all classes that manage connections with the SQLite
- * database
+ * This package contains core of application
  *
  * @author BoGnY
  *
- * @version 1.0.0.14
+ * @version 0.1.0.18
  * 
  */
 
