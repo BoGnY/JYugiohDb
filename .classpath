@@ -1,36 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk8-x64">
-		<accessrules>
-			<accessrule kind="accessible" pattern="javafx/**"/>
-		</accessrules>
+	<classpathentry kind="src" output="bin/main" path="src/main/java">
+		<attributes>
+			<attribute name="gradle_scope" value="main"/>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" output="bin/main" path="src/main/resources">
+		<attributes>
+			<attribute name="gradle_scope" value="main"/>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8/"/>
 	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
-	<classpathentry exported="true" kind="lib" path="lib/sqlite-jdbc-3.21.0.jar" sourcepath="lib/sqlite-jdbc-3.21.0-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/JYugiohDb/lib/sqlite-jdbc-3.21.0-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/javafx8.jar" sourcepath="lib/javafx8-src.zip">
-		<attributes>
-			<attribute name="javadoc_location" value="http://docs.oracle.com/javase/8/javafx/api/"/>
-		</attributes>
-		<accessrules>
-			<accessrule kind="accessible" pattern="javafx/**"/>
-		</accessrules>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/javafx8-ide-css-3.0.0.201705220750.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/log4j-api-2.10.0.jar" sourcepath="lib/log4j-api-2.10.0-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/JYugiohDb/lib/log4j-api-2.10.0-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/log4j-core-2.10.0.jar" sourcepath="lib/log4j-core-2.10.0-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/JYugiohDb/lib/log4j-core-2.10.0-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="resources"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="output" path="bin/default"/>
 </classpath>
