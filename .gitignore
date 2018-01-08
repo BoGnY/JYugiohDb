@@ -52,3 +52,4 @@ local.properties
 #JYugiohDb project
 log/
 /yugiohdb.db
+/.gradle/

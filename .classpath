@@ -5,6 +5,7 @@
 			<accessrule kind="accessible" pattern="javafx/**"/>
 		</accessrules>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
 	<classpathentry exported="true" kind="lib" path="lib/sqlite-jdbc-3.21.0.jar" sourcepath="lib/sqlite-jdbc-3.21.0-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/JYugiohDb/lib/sqlite-jdbc-3.21.0-javadoc.jar!/"/>
