@@ -8,27 +8,94 @@ buildscript {
     }
 }
 apply plugin: 'java'
+apply plugin: 'eclipse'
 
 repositories {
     mavenLocal()
     mavenCentral()
 }
 
-apply plugin: 'javafx-gradle-plugin'
-
 dependencies {
     compile 'org.apache.logging.log4j:log4j-api:2.10.0'
     compile 'org.apache.logging.log4j:log4j-core:2.10.0'
     compile 'org.xerial:sqlite-jdbc:3.21.0.1'
+    compile 'commons-io:commons-io:2.6+'
 }
+
+apply plugin: 'javafx-gradle-plugin'
+apply from: './gradle/copyDependencies.groovy'
 
 buildScan {
     licenseAgreementUrl = 'https://gradle.com/terms-of-service';
     licenseAgree = 'no'
 }
 
+def outputDir = 'build'
+
+def applicationVersion
+def specificationVersion
+def implementationVersion
+
+def nowDate = new Date()
+def timestampBuild = nowDate.format('yyyy-MM-dd HH:mm:ss')
+def timestampSource = nowDate.format('yyyyMMddHHmmss')
+
+task createVersionString {
+    description 'Create version string from properties file and set autoincrement.'
+
+    def versionPropsFile = file('config/version.properties')
+    if (versionPropsFile.canRead()) {
+        Properties versionProps = new Properties()
+
+        versionProps.load(new FileInputStream(versionPropsFile))
+        def autoIncrement = 0
+        def runTasks = gradle.startParameter.taskNames
+        if ('assemble' in runTasks || 'assembleRelease' in runTasks || 'aR' in runTasks) {
+            autoIncrement = 1
+        }
+
+        def versionMajor = versionProps['VERSION_MAJOR'].toInteger()
+        def versionMinor = versionProps['VERSION_MINOR'].toInteger()
+        def versionPatch = versionProps['VERSION_PATCH'].toInteger() + autoIncrement
+        def versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
+        def versionPrerelease = versionProps['VERSION_PRERELEASE'].toString()
+
+        versionProps['VERSION_PATCH'] = versionPatch.toString()
+        versionProps['VERSION_BUILD'] = versionBuild.toString()
+
+        versionProps.store(versionPropsFile.newWriter(), null)
+
+        applicationVersion = versionMajor + '.' + versionMinor
+        specificationVersion = applicationVersion
+        implementationVersion = versionBuild.toString()
+        if (versionPatch != 0) {
+            applicationVersion += '.' + versionPatch
+            specificationVersion += '.' + versionPatch
+        }
+        if (versionPrerelease != null) {
+            applicationVersion += '-' + versionPrerelease
+            specificationVersion += '-' + versionPrerelease
+        }
+        applicationVersion += ' build #' + versionBuild + ' (' + timestampSource + ')'
+    } else {
+        throw new GradleException("Could not read config/version.properties!")
+    }
+}
+
+jfxJar.dependsOn createVersionString, copyDependencies
+//jfxRun.dependsOn createVersionString, copyDependenciesTask
+
 jfx {
     mainClass = 'it.bogny.jyugiohdb.MainApp'
-    jfxMainAppJarName = 'jyugiohdb.jar'
+    jfxAppOutputDir = outputDir
+    jfxMainAppJarName = 'jyugiohdb v' + applicationVersion + '.jar'
     vendor = 'BoGnY'
+    manifestAttributes = [
+        "Specification-Version": specificationVersion,
+        "Implementation-Version": implementationVersion,
+        "Built-By": "BoGnY",
+        "Built-On": timestampBuild,
+        "Git-Branch": '${git_branch}',
+        "Git-Revision": ""
+    ]
 }
