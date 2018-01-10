@@ -1,0 +1,2 @@
+cache_file=tmp/github-changelog-http-cache
+cache_log=tmp/github-changelog-logger.log
