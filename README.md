@@ -1,4 +1,7 @@
 # JYugiohDb
+[![Build status](https://travis-ci.org/BoGnY/JYugiohDB.svg?branch=master)](https://travis-ci.org/BoGnY/JYugiohDB)
+[![Code coverage](https://codecov.io/gh/BoGnY/JYugiohDB/branch/master/graph/badge.svg)](https://codecov.io/gh/BoGnY/JYugiohDB)
+[![License CC BY-NC-SA 4.0](https://img.shields.io/badge/license-CC%20BY--NC--SA-blue.svg)](LICENSE.md)
 
 ## 1. What is JYugiohDb?
 This application is a searchable database of all the Yu-Gi-Oh cards, developed in Java, where are shown all infos, cards image, all sets infos for each card, and its market value.
