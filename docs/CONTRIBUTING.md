@@ -43,10 +43,10 @@ Feature requests are welcome. But take a moment to find out whether your idea fi
 
 ## Your first contribution
 
-We'd love for you to contribute to the project. Unsure where to begin contributing to JYugiohDb? You can start by looking through these "good first issue" and "help wanted" issues:
+We'd love for you to contribute to the project. Unsure where to begin contributing to JYugiohDb? You can start by looking through these "kind/proposal" and "kind/question" issues:
 
-* [Good first issues](https://github.com/BoGnY/JYugiohDB/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) - issues which should only require a few lines of code and a test or two
-* [Help wanted issues](https://github.com/BoGnY/JYugiohDB/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) - issues which may be a bit more involved, but are specifically seeking community contributions
+* [kind/proposal](https://github.com/BoGnY/JYugiohDB/issues?q=is%3Aopen+is%3Aissue+label%3Akind%2Fproposal) - issues that contains a new proposal to be evaluated
+* [kind/question](https://github.com/BoGnY/JYugiohDB/issues?q=is%3Aopen+is%3Aissue+label%3Akind%2Fquestion) - issues which contains a simple question
 
 *p.s. Feel free to ask for help; everyone is a beginner at first* :smiley_cat:
 
@@ -116,7 +116,14 @@ At a high level, the process for [proposing changes](https://guides.github.com/i
 
 ## Labels
 
-If we open/look an issue/PR, we must add a `kind/*`, an `area/*` and a `status/*`.
+If we open/look an issue/PR, we must add a `kind/*`, an `area/*` and a `status/*` _(based on [Traefik](https://github.com/containous/traefik "Traefik") project and its bots)_.
+
+### Contributor
+
+* `contributor/need-more-information`: we need more information from the contributor in order to analyze a problem.
+* `contributor/waiting-for-feedback`: we need the contributor to give us feedback.
+* `contributor/waiting-for-corrections`: we need the contributor to take actions in order to move forward with a PR. **(only for PR)** _[bot, humans]_
+* `contributor/needs-resolve-conflicts`: use it only when there is some conflicts (and an automatic rebase is not possible). **(only for PR)** _[bot, humans]_
 
 ### Kind
 
@@ -129,6 +136,12 @@ If we open/look an issue/PR, we must add a `kind/*`, an `area/*` and a `status/*
 * `kind/bug/possible`: if we need to analyze to understand if it's a bug or not. **(only for issues)**
 * `kind/bug/confirmed`: we are sure, it's a bug. **(only for issues)**
 * `kind/bug/fix`: it's a bug fix. **(only for PR)**
+
+### Resolution
+
+* `resolution/duplicate`: it's a duplicate issue/PR.
+* `resolution/declined`: Rule #1 of open-source: no is temporary, yes is forever.
+* `resolution/WIP`: Work In Progress. **(only for PR)**
 
 ### Platform
 
