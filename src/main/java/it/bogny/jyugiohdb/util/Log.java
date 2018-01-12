@@ -28,23 +28,27 @@ public class Log {
      *            The Exception to save on log file
      */
     public static void save(String logType, Exception Ex) {
+        String stackTraceText = "";
+        for (StackTraceElement stackTraceElement : Ex.getStackTrace()) {
+            stackTraceText = stackTraceText + stackTraceElement.toString() + MainApp.lineSeparator + "    ";
+        }
         switch (logType) {
             case "trace":
-                logger.trace(Ex);
+                logger.trace(stackTraceText);
                 break;
             case "debug":
-                logger.debug(Ex);
+                logger.debug(stackTraceText);
                 break;
             case "warn":
-                logger.warn(Ex);
+                logger.warn(stackTraceText);
                 alert(Ex, false);
                 break;
             case "error":
-                logger.error(Ex);
+                logger.error(stackTraceText);
                 alert(Ex, false);
                 break;
             case "fatal":
-                logger.fatal(Ex);
+                logger.fatal(stackTraceText);
                 alert(Ex, true);
                 break;
             default:
@@ -98,11 +102,15 @@ public class Log {
      *            A boolean to determine whether to close the application
      */
     public static void alert(Exception Ex, boolean close) {
+        String stackTraceText = "";
+        for (StackTraceElement stackTraceElement : Ex.getStackTrace()) {
+            stackTraceText = stackTraceText + stackTraceElement.toString() + MainApp.lineSeparator + "    ";
+        }
         Alert alert = new Alert(AlertType.ERROR);
         alert.initOwner(null);
         alert.setTitle("ERROR");
         alert.setHeaderText(Ex.getMessage());
-        alert.setContentText("A serious error has occurred so, please, go to the project page https://github.com/BoGnY/JYugiohDB and open a new issue, describe your problem and attach this log file on report: /log/log-" + DateUtil.formatShort(LocalDate.now()) + ".log" + MainApp.lineSeparator + MainApp.lineSeparator + "Please past even this stack trace: " + MainApp.lineSeparator + Ex.getStackTrace().toString() + MainApp.lineSeparator + MainApp.lineSeparator + "Thanks," + MainApp.lineSeparator + "BoGnY");
+        alert.setContentText("A serious error has occurred so, please, go to the project page https://github.com/BoGnY/JYugiohDB and open a new issue, describe your problem and attach this log file on report: /log/log-" + DateUtil.formatShort(LocalDate.now()) + ".log" + MainApp.lineSeparator + MainApp.lineSeparator + "Please past even this stack trace: " + MainApp.lineSeparator + stackTraceText + MainApp.lineSeparator + MainApp.lineSeparator + "Thanks," + MainApp.lineSeparator + "BoGnY");
         alert.showAndWait();
         if (close) {
             System.exit(1);
