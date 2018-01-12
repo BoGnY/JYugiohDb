@@ -11,8 +11,11 @@ import it.bogny.jyugiohdb.MainApp;
  *
  */
 public class Version {
-    public static String appVersion = MainApp.configProp.getProperty("specification.version");
-    public static String appBuild = MainApp.configProp.getProperty("implementation.version");
+    public static String appMajor = MainApp.configProp.getProperty("VERSION_MAJOR");
+    public static String appMinor = MainApp.configProp.getProperty("VERSION_MINOR");
+    public static String appRevision = MainApp.configProp.getProperty("VERSION_PATCH");
+    public static String appPreRelease = MainApp.configProp.getProperty("VERSION_PRERELEASE");
+    public static String appBuild = MainApp.configProp.getProperty("VERSION_BUILD");
 
     /**
      * Returns the application version as a well formatted String.
@@ -20,21 +23,20 @@ public class Version {
      * @return Formatted version string
      */
     public static String formatVersion() {
-        String[] appVersions = appVersion.split("[.]");
-        String appVersionMajor = appVersions[0];
-        String appVersionMinor = appVersions[1];
-        String appVersionRevision = null;
+        String appVersionMajor = appMajor;
+        String appVersionMinor = appMinor;
+        String appVersionRevision = appRevision;
+        String appVersionPreRelease = appPreRelease;
         String appVersionBuild = appBuild;
-        try {
-            appVersionRevision = appVersions[2];
-        } catch (ArrayIndexOutOfBoundsException Ex) {
-        } catch (Exception Ex) {
-            Log.save("error", Ex);
+
+        if (appPreRelease != "") {
+            appVersionPreRelease = "-" + appPreRelease;
         }
+
         if ((appVersionRevision != null) & (appVersionRevision != "0")) {
-            return appVersionMajor + "." + appVersionMinor + "." + appVersionRevision + " build " + appVersionBuild;
+            return appVersionMajor + "." + appVersionMinor + "." + appVersionRevision + appVersionPreRelease + " build " + appVersionBuild;
         } else {
-            return appVersionMajor + "." + appVersionMinor + " build " + appVersionBuild;
+            return appVersionMajor + "." + appVersionMinor + appVersionPreRelease + " build " + appVersionBuild;
         }
     }
 }

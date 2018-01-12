@@ -1,7 +1,6 @@
 
 package it.bogny.jyugiohdb;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -156,11 +155,11 @@ public class MainApp extends Application {
      */
     public static void main(String[] args) {
         // Set instantly the configuration of log4j2
-        Configurator.initialize(null, "config" + fileSeparator + "log4j2.xml");
+        Configurator.initialize(null, ClassLoader.getSystemResource("config" + fileSeparator + "log4j2.xml").toString());
 
         // Set immediately the configuration properties of app
         try {
-            inputProp = new FileInputStream("config" + fileSeparator + "app.properties");
+            inputProp = ClassLoader.getSystemResourceAsStream(("config" + fileSeparator + "version.properties"));
             configProp.load(inputProp);
         } catch (FileNotFoundException FileNotFoundEx) {
             Log.save("fatal", FileNotFoundEx);
