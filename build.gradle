@@ -8,7 +8,6 @@ buildscript {
     }
 }
 apply plugin: 'java'
-apply plugin: 'eclipse'
 
 repositories {
     mavenLocal()
@@ -23,14 +22,16 @@ dependencies {
 }
 
 apply plugin: 'javafx-gradle-plugin'
-apply from: './gradle/copyDependencies.groovy'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 buildScan {
     licenseAgreementUrl = 'https://gradle.com/terms-of-service';
     licenseAgree = 'no'
 }
 
-def outputDir = 'build'
+def outputDir = 'build/jfx'
 
 def applicationVersion
 def specificationVersion
@@ -43,26 +44,19 @@ def timestampSource = nowDate.format('yyyyMMddHHmmss')
 task createVersionString {
     description 'Create version string from properties file and set autoincrement.'
 
-    def versionPropsFile = file('config/version.properties')
+    def versionPropsFile = file('src/main/resources/config/version.properties')
     if (versionPropsFile.canRead()) {
         Properties versionProps = new Properties()
 
         versionProps.load(new FileInputStream(versionPropsFile))
-        def autoIncrement = 0
-        def runTasks = gradle.startParameter.taskNames
-        if ('assemble' in runTasks || 'assembleRelease' in runTasks || 'aR' in runTasks) {
-            autoIncrement = 1
-        }
 
         def versionMajor = versionProps['VERSION_MAJOR'].toInteger()
         def versionMinor = versionProps['VERSION_MINOR'].toInteger()
-        def versionPatch = versionProps['VERSION_PATCH'].toInteger() + autoIncrement
+        def versionPatch = versionProps['VERSION_PATCH'].toInteger()
         def versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
-        def versionPrerelease = versionProps['VERSION_PRERELEASE'].toString()
+        def versionPrerelease = versionProps['VERSION_PRERELEASE']
 
-        versionProps['VERSION_PATCH'] = versionPatch.toString()
         versionProps['VERSION_BUILD'] = versionBuild.toString()
-
         versionProps.store(versionPropsFile.newWriter(), null)
 
         applicationVersion = versionMajor + '.' + versionMinor
@@ -82,9 +76,6 @@ task createVersionString {
     }
 }
 
-jfxJar.dependsOn createVersionString, copyDependencies
-//jfxRun.dependsOn createVersionString, copyDependenciesTask
-
 jfx {
     mainClass = 'it.bogny.jyugiohdb.MainApp'
     jfxAppOutputDir = outputDir
@@ -101,7 +92,6 @@ jfx {
 }
 
 task copyDependencies(type: Copy) {
-    //println 'Copy dependencies and other mandatory files to build dir.'
     from('.') {
         include '/yugiohdb_empty.db'
     }
