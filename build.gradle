@@ -99,3 +99,23 @@ jfx {
         "Git-Revision": ""
     ]
 }
+
+task copyDependencies(type: Copy) {
+    //println 'Copy dependencies and other mandatory files to build dir.'
+    from('.') {
+        include '/yugiohdb_empty.db'
+    }
+    into outputDir
+    rename { String fileName ->
+        fileName.replace('_empty', '')
+    }
+}
+
+task buildJfxJarWithDep {
+    description 'This is a workaround task to solve JavaFX Gradle plugin problem with custom task after :jfxJar'
+    group = 'javafx'
+}
+
+jfxJar.dependsOn createVersionString
+copyDependencies.dependsOn jfxJar
+buildJfxJarWithDep.dependsOn copyDependencies
