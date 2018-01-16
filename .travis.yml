@@ -1,22 +1,31 @@
 language: java
 
-jdk: oraclejdk8
-
+os: linux
+dist: trusty
 sudo: required
-
-# http://stackoverflow.com/questions/35128777/travis-ci-build-failed
-before_install:
-  - chmod +x gradlew
-
-script:
-  - ./gradlew clean
-  - ./gradlew check
-  - ./gradlew build
+jdk: oraclejdk8
+env: FAILURES_ALLOWED=false
 
 branches:
   only:
     - master
     - dev
+
+# http://stackoverflow.com/questions/35128777/travis-ci-build-failed
+before_install:
+  - sudo apt-get update -qq
+  - chmod +x gradlew
+
+script:
+  - ./gradlew clean buildJfxJarWithDep --scan
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.m2
+    - $HOME/.gradle
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

@@ -5,13 +5,21 @@ buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
+        google()
+        jcenter()
     }
 }
-apply plugin: 'java'
+
+plugins {
+    id 'com.gradle.build-scan' version '1.11'
+    id 'java'
+}
 
 repositories {
     mavenLocal()
     mavenCentral()
+    google()
+    jcenter()
 }
 
 dependencies {
@@ -28,7 +36,14 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 buildScan {
     licenseAgreementUrl = 'https://gradle.com/terms-of-service';
-    licenseAgree = 'no'
+    licenseAgree = 'yes'
+    if (System.getenv('CI')) {
+        tag 'Travis-CI'
+        publishAlways()
+    } else {
+        tag 'Local'
+        publishOnFailure()
+    }
 }
 
 def outputDir = 'build/jfx'
@@ -40,6 +55,9 @@ def implementationVersion
 def nowDate = new Date()
 def timestampBuild = nowDate.format('yyyy-MM-dd HH:mm:ss')
 def timestampSource = nowDate.format('yyyyMMddHHmmss')
+
+def gitBranch = 'git rev-parse --abbrev-ref HEAD'.execute().text.trim()
+def gitCommit = 'git rev-parse --verify HEAD'.execute().text.trim()
 
 task createVersionString {
     description 'Create version string from properties file and set autoincrement.'
@@ -86,8 +104,8 @@ jfx {
         "Implementation-Version": implementationVersion,
         "Built-By": "BoGnY",
         "Built-On": timestampBuild,
-        "Git-Branch": '${git_branch}',
-        "Git-Revision": ""
+        "Git-Branch": gitBranch,
+        "Git-Revision": gitCommit
     ]
 }
 
