@@ -17,7 +17,8 @@ before_install:
   - chmod +x gradlew
 
 script:
-  - ./gradlew clean buildJfxJarWithDep --scan
+  - ./gradlew clean
+  - ./gradlew check buildJfxJarWithDep --scan
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
