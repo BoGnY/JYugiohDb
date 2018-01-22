@@ -29,11 +29,11 @@ public class Version {
         String appVersionPreRelease = appPreRelease;
         String appVersionBuild = appBuild;
 
-        if (appPreRelease != "") {
+        if (!appPreRelease.equals("")) {
             appVersionPreRelease = "-" + appPreRelease;
         }
 
-        if ((appVersionRevision != null) & (appVersionRevision != "0")) {
+        if ((appVersionRevision != null) & (!appVersionRevision.equals("0"))) {
             return appVersionMajor + "." + appVersionMinor + "." + appVersionRevision + appVersionPreRelease + " build " + appVersionBuild;
         } else {
             return appVersionMajor + "." + appVersionMinor + appVersionPreRelease + " build " + appVersionBuild;
