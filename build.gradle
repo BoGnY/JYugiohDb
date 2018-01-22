@@ -1,0 +1,139 @@
+buildscript {
+    dependencies {
+        classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+        jcenter()
+    }
+}
+
+plugins {
+    id 'com.gradle.build-scan' version '1.11'
+    id 'java'
+    id 'jacoco'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    google()
+    jcenter()
+}
+
+dependencies {
+    compile 'org.apache.logging.log4j:log4j-api:2.10.0'
+    compile 'org.apache.logging.log4j:log4j-core:2.10.0'
+    compile 'org.xerial:sqlite-jdbc:3.21.0.1'
+    compile 'commons-io:commons-io:2.6+'
+}
+
+apply plugin: 'javafx-gradle-plugin'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+buildScan {
+    licenseAgreementUrl = 'https://gradle.com/terms-of-service';
+    licenseAgree = 'yes'
+    if (System.getenv('CI')) {
+        tag 'Travis-CI'
+        publishAlways()
+    } else {
+        tag 'Local'
+        publishOnFailure()
+    }
+}
+
+def outputDir = 'build/jfx'
+
+def applicationVersion
+def specificationVersion
+def implementationVersion
+
+def nowDate = new Date()
+def timestampBuild = nowDate.format('yyyy-MM-dd HH:mm:ss')
+def timestampSource = nowDate.format('yyyyMMddHHmmss')
+
+def gitBranch = 'git rev-parse --abbrev-ref HEAD'.execute().text.trim()
+def gitCommit = 'git rev-parse --verify HEAD'.execute().text.trim()
+
+task createVersionString {
+    description 'Create version string from properties file and set autoincrement.'
+
+    def versionPropsFile = file('src/main/resources/config/version.properties')
+    if (versionPropsFile.canRead()) {
+        Properties versionProps = new Properties()
+
+        versionProps.load(new FileInputStream(versionPropsFile))
+
+        def versionMajor = versionProps['VERSION_MAJOR'].toInteger()
+        def versionMinor = versionProps['VERSION_MINOR'].toInteger()
+        def versionPatch = versionProps['VERSION_PATCH'].toInteger()
+        def versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
+        def versionPrerelease = versionProps['VERSION_PRERELEASE']
+
+        versionProps['VERSION_BUILD'] = versionBuild.toString()
+        versionProps.store(versionPropsFile.newWriter(), null)
+
+        applicationVersion = versionMajor + '.' + versionMinor
+        specificationVersion = applicationVersion
+        implementationVersion = versionBuild.toString()
+        if (versionPatch != 0) {
+            applicationVersion += '.' + versionPatch
+            specificationVersion += '.' + versionPatch
+        }
+        if (versionPrerelease != null) {
+            applicationVersion += '-' + versionPrerelease
+            specificationVersion += '-' + versionPrerelease
+        }
+        applicationVersion += ' build #' + versionBuild + ' (' + timestampSource + ')'
+    } else {
+        throw new GradleException("Could not read config/version.properties!")
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        xml.destination outputDir + '/jacoco/report-' + timestampSource + '.xml'
+        html.enabled false
+    }
+}
+
+jfx {
+    mainClass = 'it.bogny.jyugiohdb.MainApp'
+    jfxAppOutputDir = outputDir
+    jfxMainAppJarName = 'jyugiohdb v' + applicationVersion + '.jar'
+    vendor = 'BoGnY'
+    manifestAttributes = [
+        "Specification-Version": specificationVersion,
+        "Implementation-Version": implementationVersion,
+        "Built-By": "BoGnY",
+        "Built-On": timestampBuild,
+        "Git-Branch": gitBranch,
+        "Git-Revision": gitCommit
+    ]
+}
+
+task copyDependencies(type: Copy) {
+    from('.') {
+        include '/yugiohdb_empty.db'
+    }
+    into outputDir
+    rename { String fileName ->
+        fileName.replace('_empty', '')
+    }
+}
+
+task buildJfxJarWithDep {
+    description 'This is a workaround task to solve JavaFX Gradle plugin problem with custom task after :jfxJar'
+    group = 'javafx'
+}
+
+check.dependsOn jacocoTestReport
+jfxJar.dependsOn createVersionString
+copyDependencies.dependsOn jfxJar
+buildJfxJarWithDep.dependsOn copyDependencies
