@@ -19,7 +19,6 @@ import it.bogny.jyugiohdb.util.Version;
 import it.bogny.jyugiohdb.view.LayoutSwitcher;
 import javafx.application.Application;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
@@ -29,7 +28,6 @@ import javafx.stage.Stage;
  */
 public class MainApp extends Application {
     private static Stage mainStage;
-    private BorderPane mainLayout;
     public static final String fileSeparator = System.getProperty("file.separator");
     public static final String lineSeparator = System.getProperty("line.separator");
     public static Properties configProp = new Properties();

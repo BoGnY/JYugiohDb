@@ -97,7 +97,7 @@ public class CardSet {
         // For table columns (card sets)
         this.listId = new SimpleIntegerProperty(listId);
         this.cardSetLang = new SimpleStringProperty(cardSetLang);
-        this.cardSetDate = new SimpleObjectProperty<LocalDate>(cardSetDate);
+        this.cardSetDate = new SimpleObjectProperty<>(cardSetDate);
         this.cardSetCode = new SimpleStringProperty(cardSetCode);
         this.cardSetName = new SimpleStringProperty(cardSetName);
         this.cardSetRarity = new SimpleStringProperty(cardSetRarity);
