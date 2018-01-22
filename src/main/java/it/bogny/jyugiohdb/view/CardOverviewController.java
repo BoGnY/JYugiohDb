@@ -78,7 +78,7 @@ public class CardOverviewController {
     private TableColumn<CardSet, Float> cardPriceAverageColumn;
 
     // Reference to the main application.
-    private MainApp MainApp;
+    private MainApp mainApp;
 
     /**
      * The constructor. The constructor is called before the initialize() method.
@@ -110,8 +110,8 @@ public class CardOverviewController {
      * 
      * @param MainApp
      */
-    public void setMainApp(MainApp MainApp) {
-        this.MainApp = MainApp;
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
 
         // Add observable list data to the card sets table
         cardSetTable.setItems(CardSet.getCardSetData());

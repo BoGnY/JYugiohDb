@@ -16,13 +16,9 @@ import it.bogny.jyugiohdb.model.Card;
 import it.bogny.jyugiohdb.model.CardSet;
 import it.bogny.jyugiohdb.util.Log;
 import it.bogny.jyugiohdb.util.Version;
-import it.bogny.jyugiohdb.view.CardOverviewController;
-import it.bogny.jyugiohdb.view.MainLayoutController;
+import it.bogny.jyugiohdb.view.LayoutSwitcher;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -32,7 +28,7 @@ import javafx.stage.Stage;
  * @author BoGnY
  */
 public class MainApp extends Application {
-    private static Stage primaryStage;
+    private static Stage mainStage;
     private BorderPane mainLayout;
     public static final String fileSeparator = System.getProperty("file.separator");
     public static final String lineSeparator = System.getProperty("line.separator");
@@ -46,8 +42,8 @@ public class MainApp extends Application {
      * <br>
      * NOTE: This method is called on the JavaFX Application Thread.
      * 
-     * @param primaryStage
-     *            the primary stage for this application, onto which the application
+     * @param stage
+     *            The primary stage for this application, onto which the application
      *            scene can be set. The primary stage will be embedded in the
      *            browser if the application was launched as an applet. Applications
      *            may create other stages, if needed, but they will not be primary
@@ -55,62 +51,16 @@ public class MainApp extends Application {
      * @throws Exception
      */
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        MainApp.primaryStage = primaryStage;
-        MainApp.primaryStage.setTitle("YugiohDb v" + Version.formatVersion());
+    public void start(Stage stage) throws Exception {
+        mainStage = stage;
+        mainStage.setTitle("YugiohDb v" + Version.formatVersion());
 
         // Set the application icon.
-        MainApp.primaryStage.getIcons().add(new Image("file:resources/images/app_icon.png"));
+        mainStage.getIcons().add(new Image("file:it/bogny/jyugiohdb/images/app_icon.png"));
 
-        initMainLayout();
+        mainStage.setScene(LayoutSwitcher.createScene(LayoutSwitcher.loadMainPane()));
 
-        showCardOverview();
-
-    }
-
-    /**
-     * Initializes the main layout.
-     */
-    public void initMainLayout() {
-        try {
-            // Load main layout from fxml file.
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(MainApp.class.getResource("view/MainLayout.fxml"));
-            mainLayout = (BorderPane) fxmlLoader.load();
-
-            // Show the scene containing the main layout.
-            Scene mainScene = new Scene(mainLayout);
-            primaryStage.setScene(mainScene);
-
-            // Give the controller access to the main app.
-            MainLayoutController mainLayoutController = fxmlLoader.getController();
-            mainLayoutController.setMainApp(this);
-
-            primaryStage.show();
-        } catch (IOException IOEx) {
-            Log.save("fatal", IOEx);
-        }
-    }
-
-    /**
-     * Shows the card overview inside the main layout.
-     */
-    public void showCardOverview() {
-        try {
-            // Load card overview.
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(MainApp.class.getResource("view/CardOverview.fxml"));
-            AnchorPane cardOverview = (AnchorPane) fxmlLoader.load();
-
-            // Set card overview into the center of main layout.
-            mainLayout.setCenter(cardOverview);
-
-            // Give the controller access to the main app.
-            CardOverviewController cardOverviewController = fxmlLoader.getController();
-            cardOverviewController.setMainApp(this);
-        } catch (IOException IOEx) {
-            Log.save("fatal", IOEx);
-        }
+        mainStage.show();
     }
 
     /**
@@ -118,8 +68,8 @@ public class MainApp extends Application {
      * 
      * @return
      */
-    public static Stage getPrimaryStage() {
-        return primaryStage;
+    public static Stage getMainStage() {
+        return mainStage;
     }
 
     /**
