@@ -108,7 +108,7 @@ public class CardOverviewController {
     /**
      * Is called by the main application to give a reference back to itself.
      * 
-     * @param MainApp
+     * @param mainApp
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;

@@ -35,7 +35,7 @@ public class LayoutSwitcher {
     /**
      * Stores the main controller for later use in navigation tasks.
      *
-     * @param mainController
+     * @param layoutController
      *            The main application layout controller.
      */
     public static void setMainController(LayoutController layoutController) {
@@ -46,7 +46,7 @@ public class LayoutSwitcher {
      * Loads the layout specified by the fxml file into the layoutHolder AnchorPane
      * of the main application layout.
      *
-     * @param fxml
+     * @param layoutFxml
      *            The fxml file to be loaded.
      */
     public static void loadLayout(String layoutFxml) {
