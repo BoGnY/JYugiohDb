@@ -1,0 +1,102 @@
+## GITATTRIBUTES FOR JAVA PROJECTS AND COMMON PROJECTS
+# Based on https://github.com/alexkaratarakis/gitattributes
+#
+# These settings are for java project (with added common project settings).
+#
+# Details per file setting:
+#   text    These files should be normalized (i.e. convert CRLF to LF).
+#   binary  These files are binary and should be left untouched.
+#
+# Note that binary is a macro for -text -diff.
+######################################################################
+
+## AUTO-DETECT
+##   Handle line endings automatically for files detected as
+##   text and leave all files detected as binary untouched.
+##   This will handle all files NOT defined below.
+*               text=auto
+
+## SOURCE CODE
+# These files are text and should be normalized (Convert crlf => lf)
+.classpath      text
+.gitattributes  text
+.gitconfig      text
+.gitignore      text
+.project        text
+*.bat           text    eol=crlf
+*.css           text    diff=css
+*.df            text
+*.fxml          text
+*.gradle        text
+*.htm           text    diff=html
+*.html          text    diff=html
+*.java          text    diff=java
+*.js            text
+*.json          text
+*.jsp           text
+*.jspf          text
+*.jspx          text
+*.prefs         text
+*.properties    text
+*.sh            text    eol=lf
+*.tld           text
+*.tag           text
+*.tagx          text
+*.xml           text
+*.yaml          text
+*.yml           text
+
+## DOCUMENTATION
+*.markdown      text
+*.md            text
+*.mdwn          text
+*.mdown         text
+*.mkd           text
+*.mkdn          text
+*.mdtxt         text
+*.mdtext        text
+*.txt           text
+AUTHORS         text
+CHANGELOG       text
+CHANGES         text
+CONTRIBUTING    text
+COPYING         text
+copyright       text
+*COPYRIGHT*     text
+INSTALL         text
+license         text
+LICENSE         text
+NEWS            text
+readme          text
+*README*        text
+TODO            text
+
+## GRAPHICS
+# These files are binary and should be left untouched
+# (binary is a macro for -text -diff)
+*.bmp           binary
+*.eps           binary
+*.gif           binary
+*.ico           binary
+*.jpg           binary
+*.jpeg          binary
+*.png           binary
+*.svg           binary
+*.tif           binary
+*.tiff          binary
+
+## ARCHIVES
+*.7z            binary
+*.ear           binary
+*.gz            binary
+*.jar           binary
+*.rar           binary
+*.tar           binary
+*.war           binary
+*.zip           binary
+
+## OTHER
+*.class         binary
+*.db            binary
+*.dll           binary
+*.so            binary
