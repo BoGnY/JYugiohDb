@@ -6,11 +6,6 @@ sudo: required
 jdk: oraclejdk8
 env: FAILURES_ALLOWED=false
 
-branches:
-  only:
-    - master
-    - dev
-
 # http://stackoverflow.com/questions/35128777/travis-ci-build-failed
 before_install:
   - sudo apt-get update -qq
