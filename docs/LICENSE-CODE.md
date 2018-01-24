@@ -2,7 +2,7 @@
 # Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
 
 ## JYugiohDb (c) 2017-2018 by BoGnY <[admin@bogny.it](mailto:admin@bogny.it)> ([https://www.bogny.it](https://www.bogny.it))
-## and all other authors and contributors, see [AUTHORS.md](AUTHORS.md) for a full list
+## and all other authors and contributors, see [AUTHORS.md](/AUTHORS.md) for a full list
 
 This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/ "Creative Commons BY-NC-SA 4.0").
 

@@ -1,6 +1,5 @@
 # JYugiohDb
 [![Build status](https://travis-ci.org/BoGnY/JYugiohDB.svg?branch=master)](https://travis-ci.org/BoGnY/JYugiohDB)
-[![Code coverage](https://codecov.io/gh/BoGnY/JYugiohDB/branch/master/graph/badge.svg)](https://codecov.io/gh/BoGnY/JYugiohDB)
 [![License CC BY-NC-SA 4.0](https://img.shields.io/badge/license-CC%20BY--NC--SA-blue.svg)](LICENSE.md)
 
 ## 1. What is JYugiohDb?
@@ -14,14 +13,14 @@ It is based on my personal YugiohDb application, developed in C#, which has not 
 JYugiohDb is released under the terms of [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode "Creative Commons BY-NC-SA"). JYugiohDb is free to use and modify, if you give the appropriate credit, and can't be used for commercial purposes. It is free to redistribute your contributions under the same license as the original [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode "Creative Commons BY-NC-SA").
 
 ## 3. Support
-**[Wiki](https://github.com/BoGnY/JYugiohDB/wiki "Official wiki")** - The Wiki has information related to "How To", FAQ, feature requirements, etc.
+**[Wiki](/wiki "Official wiki")** - The Wiki has information related to "How To", FAQ, feature requirements, etc.
 
 **Search** - A good way for locating an answer to your question or finding more information about this application, is to search across this project website and/or the Internet via your favorite search engine, eg. [Google](https://www.google.com "Google search") or [Bing](https://www.bing.com "Bing search").
 
 ## 4. News
 There are several ways to keep up to date with projects news. These include:
 
-On **[issue tracker](https://github.com/BoGnY/JYugiohDB/issues "JYugiohDB Issue Tracker")** we send release announcements and important updates to users. Your Github account can also be used to report, monitor, and comment on issues relating to this project.
+On **[issue tracker](/issues "JYugiohDB Issue Tracker")** we send release announcements and important updates to users. Your Github account can also be used to report, monitor, and comment on issues relating to this project.
 
 ~**[Blog](https://www.bogny.it "BoGnY's blog")** is used to communicate announcements about new releases, topics relating to projects, etc. Users are encouraged to subscribe to the RSS feed to know when new posts are posted there.~ **NOT YET**
 
