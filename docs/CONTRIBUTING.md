@@ -106,8 +106,8 @@ At a high level, the process for [proposing changes](https://guides.github.com/i
 1. Configure and install the [dependencies](#dependencies "Dependencies list")
 2. [Fork](/fork) and clone the project
 3. Set Git to preserve current EOL (more info [here](https://help.github.com/articles/dealing-with-line-endings/ "Dealing with line endings")):
-  - for MacOS and Linux user: `git config core.autocrlf input` (respect current EOL) and with `git config core.safecrlf true` (fail commit when EOL are changed)
-  - for Windows user: `git config core.autocrlf true` (respect current EOL) and with `git config core.safecrlf true` (fail commit when EOL are changed)
+    - for MacOS and Linux user: `git config core.autocrlf input` (respect current EOL) and with `git config core.safecrlf true` (fail commit when EOL are changed)
+    - for Windows user: `git config core.autocrlf true` (respect current EOL) and with `git config core.safecrlf true` (fail commit when EOL are changed)
 4. Checkout on _**dev**_ branch: `git checkout dev`
 5. Create a descriptively named feature branch: `git checkout -b feature/new-feature-name` or `git checkout -b bugfix/issue-99` (where **issue-99** is the related [#ISSUE_NUMBER](/issues))
 6. Make your change, test it and add documentation, so make sure the test still pass
@@ -135,7 +135,6 @@ If we open/look an issue/PR, we must add a `kind/*`, an `area/*` and a `status/*
 * `kind/proposal`: proposal PR/issues need a public debate.
   * _Proposal issues_ are design proposal that need to be refined with multiple contributors.
   * _Proposal PRs_ are technical prototypes that need to be refined with multiple contributors.
-
 * `kind/bug/possible`: if we need to analyze to understand if it's a bug or not. **(only for issues)**
 * `kind/bug/confirmed`: we are sure, it's a bug. **(only for issues)**
 * `kind/bug/fix`: it's a bug fix. **(only for PR)**
