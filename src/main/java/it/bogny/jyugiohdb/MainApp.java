@@ -55,7 +55,7 @@ public class MainApp extends Application {
         mainStage.setTitle("YugiohDb v" + Version.formatVersion());
 
         // Set the application icon.
-        mainStage.getIcons().add(new Image("file:it/bogny/jyugiohdb/images/app_icon.png"));
+        mainStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream("it/bogny/jyugiohdb/images/app_icon.png")));
 
         mainStage.setScene(LayoutSwitcher.createScene(LayoutSwitcher.loadMainPane()));
 
