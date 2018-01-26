@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import it.bogny.jyugiohdb.util.Log;
+import it.bogny.jyugiohdb.util.LogType;
 
 /**
  * @author BoGnY
@@ -32,7 +33,7 @@ public class DbCardSetsList {
             dbPreparedStatement.setInt(1, cardId);
             dbResultSet = dbPreparedStatement.executeQuery();
         } catch (SQLException SQLEx) {
-            Log.save("error", SQLEx);
+            Log.save(LogType.ERROR, SQLEx);
         }
         return dbResultSet;
     }

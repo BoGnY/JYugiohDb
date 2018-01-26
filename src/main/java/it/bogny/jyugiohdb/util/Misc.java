@@ -40,12 +40,12 @@ public class Misc {
                 fileOutputStream.close();
                 readableByteChannel.close();
                 if (new File(imagePath).exists()) {
-                    Log.save("debug", "Downloaded image for cardId " + cardId + " correctly!");
+                    Log.save(LogType.DEBUG, "Downloaded image for cardId " + cardId + " correctly!");
                 } else {
-                    Log.save("debug", "Error while downloading image for cardId " + cardId + "!!");
+                    Log.save(LogType.WARN, "Error while downloading image for cardId " + cardId + "!!");
                 }
             } catch (IOException IOEx) {
-                Log.save("warn", IOEx);
+                Log.save(LogType.WARN, IOEx);
             }
         }
     }

@@ -9,6 +9,7 @@ import it.bogny.jyugiohdb.MainApp;
 import it.bogny.jyugiohdb.model.Card;
 import it.bogny.jyugiohdb.model.CardSet;
 import it.bogny.jyugiohdb.util.Log;
+import it.bogny.jyugiohdb.util.LogType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -223,7 +224,7 @@ public class CardOverviewController {
             showCardDetails(Card.cardData.get(0));
             showCardSetDetails(Card.cardData.get(0).getCardId());
         } catch (Exception Ex) {
-            Log.save("error", Ex);
+            Log.save(LogType.ERROR, Ex);
         }
     }
 
@@ -253,7 +254,7 @@ public class CardOverviewController {
                 actionEvent.consume();
             }
         } catch (Exception Ex) {
-            Log.save("error", Ex);
+            Log.save(LogType.ERROR, Ex);
         }
     }
 
@@ -283,7 +284,7 @@ public class CardOverviewController {
                 actionEvent.consume();
             }
         } catch (Exception Ex) {
-            Log.save("error", Ex);
+            Log.save(LogType.ERROR, Ex);
         }
     }
 
@@ -296,7 +297,7 @@ public class CardOverviewController {
             showCardDetails(Card.cardData.get(Card.cardData.size() - 1));
             showCardSetDetails(Card.cardData.get(Card.cardData.size() - 1).getCardId());
         } catch (Exception Ex) {
-            Log.save("error", Ex);
+            Log.save(LogType.ERROR, Ex);
         }
     }
 

@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import it.bogny.jyugiohdb.util.Log;
+import it.bogny.jyugiohdb.util.LogType;
 
 /**
  * @author BoGnY
@@ -33,7 +34,7 @@ public class DbCardDbTable {
             dbStatement = dbConnection.createStatement();
             dbResultSet = dbStatement.executeQuery(sqlString);
         } catch (SQLException SQLEx) {
-            Log.save("error", SQLEx);
+            Log.save(LogType.ERROR, SQLEx);
         }
         return dbResultSet;
     }
@@ -57,7 +58,7 @@ public class DbCardDbTable {
             dbPreparedStatement.setInt(1, cardId);
             dbResultSet = dbPreparedStatement.executeQuery(sqlString);
         } catch (SQLException SQLEx) {
-            Log.save("error", SQLEx);
+            Log.save(LogType.ERROR, SQLEx);
         }
         return dbResultSet;
     }
@@ -102,7 +103,7 @@ public class DbCardDbTable {
             dbPreparedStatement.setString(12, cardText);
             dbPreparedStatement.executeUpdate();
         } catch (SQLException SQLEx) {
-            Log.save("error", SQLEx);
+            Log.save(LogType.ERROR, SQLEx);
         }
         // After the insert statement, return the updated cardDb table rows
         ResultSet dbResultSet = selectCardDb();
@@ -149,7 +150,7 @@ public class DbCardDbTable {
             dbPreparedStatement.setInt(12, cardId);
             dbPreparedStatement.executeUpdate();
         } catch (SQLException SQLEx) {
-            Log.save("error", SQLEx);
+            Log.save(LogType.ERROR, SQLEx);
         }
         // After the insert statement, return the updated cardDb table rows
         ResultSet dbResultSet = selectCardDb();
@@ -174,7 +175,7 @@ public class DbCardDbTable {
             dbPreparedStatement.setInt(1, cardId);
             dbPreparedStatement.executeUpdate();
         } catch (SQLException SQLEx) {
-            Log.save("error", SQLEx);
+            Log.save(LogType.ERROR, SQLEx);
         }
         // After the insert statement, return the updated cardDb table rows
         ResultSet dbResultSet = selectCardDb();

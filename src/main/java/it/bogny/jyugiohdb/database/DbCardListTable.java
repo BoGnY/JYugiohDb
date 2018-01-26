@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import it.bogny.jyugiohdb.util.Log;
+import it.bogny.jyugiohdb.util.LogType;
 
 /**
  * @author BoGnY
@@ -43,7 +44,7 @@ public class DbCardListTable {
             dbPreparedStatement.setString(3, cardSetCode);
             dbResultSet = dbPreparedStatement.executeQuery(sqlString);
         } catch (SQLException SQLEx) {
-            Log.save("error", SQLEx);
+            Log.save(LogType.ERROR, SQLEx);
         }
         return dbResultSet;
     }
@@ -80,7 +81,7 @@ public class DbCardListTable {
             dbPreparedStatement.setBigDecimal(8, cardPriceAverage);
             dbPreparedStatement.executeUpdate();
         } catch (SQLException SQLEx) {
-            Log.save("error", SQLEx);
+            Log.save(LogType.ERROR, SQLEx);
         }
         // After the insert statement, return the updated cardSets table rows
         ResultSet dbResultSet = selectCardList(listId, cardId, cardSetCode);
@@ -119,7 +120,7 @@ public class DbCardListTable {
             dbPreparedStatement.setString(8, cardSetCode);
             dbPreparedStatement.executeUpdate();
         } catch (SQLException SQLEx) {
-            Log.save("error", SQLEx);
+            Log.save(LogType.ERROR, SQLEx);
         }
         // After the update statement, return the updated cardList table rows
         ResultSet dbResultSet = selectCardList(listId, cardId, cardSetCode);

@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import it.bogny.jyugiohdb.util.Log;
+import it.bogny.jyugiohdb.util.LogType;
 
 /**
  * @author BoGnY
@@ -37,7 +38,7 @@ public class DbCardSetsTable {
             dbPreparedStatement.setInt(1, cardId);
             dbResultSet = dbPreparedStatement.executeQuery();
         } catch (SQLException SQLEx) {
-            Log.save("error", SQLEx);
+            Log.save(LogType.ERROR, SQLEx);
         }
         return dbResultSet;
     }
@@ -70,7 +71,7 @@ public class DbCardSetsTable {
             dbPreparedStatement.setString(6, cardSetRarity);
             dbPreparedStatement.executeUpdate();
         } catch (SQLException SQLEx) {
-            Log.save("error", SQLEx);
+            Log.save(LogType.ERROR, SQLEx);
         }
         // After the insert statement, return the updated cardSets table rows
         ResultSet dbResultSet = selectCardSets(cardId);

@@ -17,36 +17,36 @@ public class Log {
 
     /**
      * Initialize log function with package {@link org.apache.logging.log4j.Logger}
-     * and call {@link #alert(Exception, boolean)} if logType param isn't "trace" or
-     * "debug", to show the error message to the user
+     * and call {@link #alert(Exception, boolean)} if logType param is
+     * "<i>ERROR</i>" or "<i>FATAL</i>", to show the error message to the user.
      * 
      * @param logType
      *            The type of logs, <b>MUST BE</b> one of this:
-     *            "<i>trace</i>", "<i>debug</i>", "<i>warn</i>", "<i>error</i>",
-     *            "<i>fatal</i>"
+     *            "<i>TRACE</i>", "<i>DEBUG</i>", "<i>WARN</i>", "<i>ERROR</i>",
+     *            "<i>FATAL</i>"
      * @param Ex
      *            The Exception to save on log file
      */
-    public static void save(String logType, Exception Ex) {
+    public static void save(LogType logType, Exception Ex) {
         String stackTraceText = "";
         for (StackTraceElement stackTraceElement : Ex.getStackTrace()) {
             stackTraceText = stackTraceText + stackTraceElement.toString() + MainApp.lineSeparator + "    ";
         }
         switch (logType) {
-            case "trace":
+            case TRACE:
                 logger.trace(stackTraceText);
                 break;
-            case "debug":
+            case DEBUG:
                 logger.debug(stackTraceText);
                 break;
-            case "warn":
+            case WARN:
                 logger.warn(stackTraceText);
                 break;
-            case "error":
+            case ERROR:
                 logger.error(stackTraceText);
                 alert(Ex, false);
                 break;
-            case "fatal":
+            case FATAL:
                 logger.fatal(stackTraceText);
                 alert(Ex, true);
                 break;
@@ -57,32 +57,32 @@ public class Log {
 
     /**
      * Initialize log function with package {@link org.apache.logging.log4j.Logger}
-     * and call {@link #alert(String, boolean)} if logType param isn't "trace" or
-     * "debug", to show the error message to the user
+     * and call {@link #alert(String, boolean)} if logType param is
+     * "<i>ERROR</i>" or "<i>FATAL</i>", to show the error message to the user.
      * 
      * @param logType
      *            The type of logs, <b>MUST BE</b> one of this:
-     *            "<i>trace</i>", "<i>debug</i>", "<i>warn</i>", "<i>error</i>",
-     *            "<i>fatal</i>"
+     *            "<i>TRACE</i>", "<i>DEBUG</i>", "<i>WARN</i>", "<i>ERROR</i>",
+     *            "<i>FATAL</i>"
      * @param message
      *            The message to save on log file
      */
-    public static void save(String logType, String message) {
+    public static void save(LogType logType, String message) {
         switch (logType) {
-            case "trace":
+            case TRACE:
                 logger.trace(message);
                 break;
-            case "debug":
+            case DEBUG:
                 logger.debug(message);
                 break;
-            case "warn":
+            case WARN:
                 logger.warn(message);
                 break;
-            case "error":
+            case ERROR:
                 logger.error(message);
                 alert(message, false);
                 break;
-            case "fatal":
+            case FATAL:
                 logger.fatal(message);
                 alert(message, true);
                 break;

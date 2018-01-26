@@ -4,6 +4,7 @@ package it.bogny.jyugiohdb.view;
 import java.io.IOException;
 import it.bogny.jyugiohdb.MainApp;
 import it.bogny.jyugiohdb.util.Log;
+import it.bogny.jyugiohdb.util.LogType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -53,7 +54,7 @@ public class LayoutSwitcher {
         try {
             layoutController.setLayout(FXMLLoader.load(ClassLoader.getSystemResource(layoutFxml)));
         } catch (IOException IOEx) {
-            Log.save("fatal", IOEx);
+            Log.save(LogType.FATAL, IOEx);
         }
     }
 

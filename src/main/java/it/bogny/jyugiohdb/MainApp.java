@@ -15,6 +15,7 @@ import it.bogny.jyugiohdb.database.DbCardSetsList;
 import it.bogny.jyugiohdb.model.Card;
 import it.bogny.jyugiohdb.model.CardSet;
 import it.bogny.jyugiohdb.util.Log;
+import it.bogny.jyugiohdb.util.LogType;
 import it.bogny.jyugiohdb.util.Version;
 import it.bogny.jyugiohdb.view.LayoutSwitcher;
 import javafx.application.Application;
@@ -89,9 +90,9 @@ public class MainApp extends Application {
                 }
             }
         } catch (SQLException SQLEx) {
-            Log.save("fatal", SQLEx);
+            Log.save(LogType.FATAL, SQLEx);
         } catch (Exception Ex) {
-            Log.save("fatal", Ex);
+            Log.save(LogType.FATAL, Ex);
         }
     }
 
@@ -110,9 +111,9 @@ public class MainApp extends Application {
             inputProp = ClassLoader.getSystemResourceAsStream(("config" + fileSeparator + "version.properties"));
             configProp.load(inputProp);
         } catch (FileNotFoundException FileNotFoundEx) {
-            Log.save("fatal", FileNotFoundEx);
+            Log.save(LogType.FATAL, FileNotFoundEx);
         } catch (IOException IOEx) {
-            Log.save("fatal", IOEx);
+            Log.save(LogType.FATAL, IOEx);
         }
 
         launch(args);
