@@ -92,11 +92,25 @@ public class CardOverviewController {
      */
     @FXML
     private void initialize() {
-        // Initialize the card labels
-        showCardDetails(Card.cardData.get(0));
+        try {
+            // Initialize the card labels
+            showCardDetails(Card.cardData.get(0));
+        } catch (IndexOutOfBoundsException IndexOutOfBoundsEx) {
+            // Skip this exception
+            Log.save(LogType.WARN, "In the current database file yugiohdb.db there are zero cards!!");
+        } catch (Exception Ex) {
+            Log.save(LogType.ERROR, Ex);
+        }
 
-        // Initialize the card set table with the eight columns (which one is hide).
-        showCardSetDetails(Card.cardData.get(0).getCardId());
+        try {
+            // Initialize the card set table with the eight columns (which one is hide).
+            showCardSetDetails(Card.cardData.get(0).getCardId());
+        } catch (IndexOutOfBoundsException IndexOutOfBoundsEx) {
+            // Skip this exception
+            Log.save(LogType.WARN, "In the current database file yugiohdb.db there are zero card sets!!");
+        } catch (Exception Ex) {
+            Log.save(LogType.ERROR, Ex);
+        }
 
         // Listen for selection changes and show the card set details when changed.
         cardIdItem.textProperty().addListener((observable, oldValue, newValue) -> showCardSetDetails(Integer.parseInt(newValue)));
