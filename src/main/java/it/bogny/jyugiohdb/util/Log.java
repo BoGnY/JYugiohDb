@@ -41,7 +41,6 @@ public class Log {
                 break;
             case "warn":
                 logger.warn(stackTraceText);
-                alert(Ex, false);
                 break;
             case "error":
                 logger.error(stackTraceText);
@@ -78,7 +77,6 @@ public class Log {
                 break;
             case "warn":
                 logger.warn(message);
-                alert(message, false);
                 break;
             case "error":
                 logger.error(message);
